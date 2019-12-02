@@ -1,0 +1,174 @@
+package test.model.user;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import soft252.model.user.*;
+import soft252.model.user.info.Gender;
+import soft252.model.user.info.Role;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class UserRepositoryTest {
+    private static UserRepository _instance;
+    private static User[] _users = new User[]{
+            new Patient(
+                    "1111",
+                    "Lucas",
+                    "McCarron",
+                    Gender.MALE),
+
+            new Patient(
+                    "2222",
+                    "Lee",
+                    "Smith",
+                    Gender.MALE),
+
+            new Patient(
+                    "3333",
+                    "Holly",
+                    "Barker",
+                    Gender.FEMALE),
+
+            new Admin(
+                    "4444",
+                    "Max",
+                    "Barker"),
+
+            new Secretary(
+                    "5555",
+                    "Harry",
+                    "Stradling"),
+
+            new Doctor(
+                    "6666",
+                    "Sophie",
+                    "Brockbank")
+    };
+
+    @BeforeAll
+    public static void setUpClass() {
+        _instance = UserRepository.getInstance();
+        for(User u: _users) _instance.add(u);
+    }
+
+    /**
+     * Test of getUsers method, of class UserRepository.
+     *
+     * NOTE: The reason for the for loop is because the order of the Users is not important but what is, is whether they
+     * are in the array or not.
+     */
+    @Test
+    @DisplayName("getUsers 0args")
+    public void testGetAll_0args() {
+
+        ArrayList<User> expResult = new ArrayList<>(Arrays.asList(_users));
+        ArrayList<User> result = _instance.getAll();
+
+        for (User u : result) assertTrue(expResult.contains(u));
+    }
+
+    /**
+     * Test of getUsers method, of class UserRepository.
+     */
+    @Test
+    @DisplayName("getUsers")
+    public void testGetAll_Role() {
+        ArrayList<User> expResult = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(_users, 0, 3)));
+        ArrayList<User> result =  _instance.getAll(Role.PATIENT);
+        assertEquals(expResult, result);
+
+        expResult = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(_users, 3, 4)));
+        result =  _instance.getAll(Role.ADMIN);
+        assertEquals(expResult, result);
+
+        expResult = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(_users, 4, 5)));
+        result =  _instance.getAll(Role.SECRETARY);
+        assertEquals(expResult, result);
+
+        expResult = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(_users, 5, 6)));
+        result =  _instance.getAll(Role.DOCTOR);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of add method, of class UserRepository.
+     */
+    @Test
+    @DisplayName("add")
+    public void testAdd() {
+        Doctor item = new Doctor("7777", "John", "Cena");
+        _instance.add(item);
+
+        assertTrue(_instance.getAll(Role.DOCTOR).contains(item));
+
+        _instance.remove(item);
+    }
+
+    /**
+     * Test of remove method, of class UserRepository.
+     */
+    @Test
+    @DisplayName("remove")
+    public void testRemove() {
+        _instance.remove(_users[0]);
+
+        ArrayList<User> expResult = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(_users, 1, 3)));
+        ArrayList<User> result =  _instance.getAll(Role.PATIENT);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of contains method, of class UserRepository.
+     */
+    @Test
+    @DisplayName("contains")
+    public void testContains_User() {
+        User item = _users[0];
+        assertTrue(_instance.contains(item));
+
+        item = new Doctor("4242", "John", "Cena");
+        assertFalse(_instance.contains(item));
+    }
+
+    /**
+     * Test of contains method, of class UserRepository.
+     */
+    @Test
+    @DisplayName("contains string")
+    public void testContains_String() {
+        String id = "P1111";
+        assertTrue(_instance.contains(id));
+
+        id = "S5555";
+        assertTrue(_instance.contains(id));
+
+        id = "A9999";
+        assertFalse(_instance.contains(id));
+    }
+
+    /**
+     * Test of find method, of class UserRepository.
+     */
+    @Test
+    @DisplayName("find")
+    public void testFind() {
+        String id = "P1111";
+        User expResult = _users[0];
+        User result = _instance.find(id);
+        assertEquals(expResult, result);
+
+        id = "S5555";
+        expResult = _users[4];
+        result = _instance.find(id);
+        assertEquals(expResult, result);
+
+        id = "A9999";
+        expResult = null;
+        result = _instance.find(id);
+        assertEquals(expResult, result);
+    }
+}
