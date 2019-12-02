@@ -1,6 +1,6 @@
 package soft252.model.user.feedback;
 
-import soft252.model.appointment.OutOfRangeException;
+import soft252.exceptions.OutOfRangeException;
 
 /**
  * A class that creates I_Feedback objects.

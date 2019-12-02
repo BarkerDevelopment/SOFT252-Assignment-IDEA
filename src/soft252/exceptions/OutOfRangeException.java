@@ -1,4 +1,4 @@
-package soft252.model.appointment;
+package soft252.exceptions;
 
 /**
  * OutOfRangeException is a superclass of exceptions related to inputs out of a specific range, not related to indices
