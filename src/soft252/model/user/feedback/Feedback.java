@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
  * Generic feedback class.
  */
 public class Feedback
-    implements I_Feedback, I_Moderated{
+    implements I_Feedback{
 
     private final LocalDateTime _dateTime;
     private String _feedback;

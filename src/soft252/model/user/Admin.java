@@ -3,7 +3,6 @@ package soft252.model.user;
 import soft252.model.user.feedback.I_Feedback;
 import soft252.model.user.feedback.I_FeedbackModerator;
 import soft252.model.user.feedback.I_FeedbackRecipient;
-import soft252.model.user.feedback.I_Moderated;
 import soft252.model.user.info.Address;
 import soft252.model.user.info.Role;
 import soft252.model.user.messaging.I_Message;
@@ -88,7 +87,7 @@ public class Admin extends User
      */
     @Override
     public ArrayList<I_Feedback> getUnmoderatedFeedback(I_FeedbackRecipient recipient) {
-        return null;
+        return recipient.getFeedback(false);
     }
 
     /**
@@ -98,10 +97,7 @@ public class Admin extends User
      */
     @Override
     public void moderateFeedback(I_Feedback feedback) {
-        if(feedback instanceof I_Moderated){
-            I_Moderated feedbackModerated = (I_Moderated) feedback;
-            feedbackModerated.setIsModerated(true);
-        }
+        feedback.setIsModerated(true);
     }
 
     /**
@@ -113,8 +109,7 @@ public class Admin extends User
     @Override
     public void moderateFeedback(I_Feedback feedback, String string) {
         feedback.setFeedback(string);
-
-        moderateFeedback(feedback);
+        feedback.setIsModerated(true);
     }
 
     /**

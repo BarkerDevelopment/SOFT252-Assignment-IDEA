@@ -77,7 +77,11 @@ public class Doctor extends User
      */
     @Override
     public ArrayList<I_Feedback> getFeedback(boolean flag) {
-        return null;
+        ArrayList<I_Feedback> allFeedback = new ArrayList<>();
+
+        for(I_Feedback feedback: _feedback) if(feedback.isModerated() == flag) allFeedback.add(feedback);
+
+        return allFeedback;
     }
 
     /**

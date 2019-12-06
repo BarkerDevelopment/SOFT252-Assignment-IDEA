@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 /**
  * Defines the functions for an object that is used for feedback.
  */
-public interface I_Feedback {
+public interface I_Feedback extends I_Moderated{
     /**
      * @return the _dateTime variable. This represents the DateTime the feedback was sent.
      */
