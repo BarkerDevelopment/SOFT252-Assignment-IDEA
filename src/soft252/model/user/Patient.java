@@ -1,5 +1,6 @@
 package soft252.model.user;
 
+import soft252.model.drugs.I_Prescription;
 import soft252.model.user.feedback.I_Feedback;
 import soft252.model.user.feedback.I_FeedbackRecipient;
 import soft252.model.user.feedback.I_FeedbackSender;
@@ -8,6 +9,7 @@ import soft252.model.user.info.Gender;
 import soft252.model.user.info.Role;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * A User subclass for the system's patients.
@@ -18,6 +20,7 @@ public class Patient extends User
     private static Role ROLE = Role.PATIENT;
     private final LocalDate _dob;
     private final Gender _gender;
+    private ArrayList< I_Prescription > _prescriptions;
 
     /**
      * Creates an Patient object.
@@ -33,6 +36,7 @@ public class Patient extends User
         super(ROLE, name, surname, address, password);
         _dob = dob;
         _gender = gender;
+        _prescriptions = new ArrayList<>();
     }
 
     /**
@@ -50,6 +54,7 @@ public class Patient extends User
         super(ROLE, name, surname, password, seed);
         _dob = dob;
         _gender = gender;
+        _prescriptions = new ArrayList<>();
     }
 
     /**
@@ -66,6 +71,7 @@ public class Patient extends User
         super(ROLE, idNumber, name, surname);
         _dob = LocalDate.now();
         _gender = gender;
+        _prescriptions = new ArrayList<>();
     }
 
     /**
@@ -80,6 +86,20 @@ public class Patient extends User
      */
     public Gender getGender() {
         return _gender;
+    }
+
+    /**
+     * @return the _prescriptions variable.
+     */
+    public ArrayList< I_Prescription > getPrescriptions() {
+        return _prescriptions;
+    }
+
+    /**
+     * @param prescriptions the new contents to set _prescriptions to.
+     */
+    public void setPrescriptions(ArrayList< I_Prescription > prescriptions) {
+        _prescriptions = prescriptions;
     }
 
     /**
