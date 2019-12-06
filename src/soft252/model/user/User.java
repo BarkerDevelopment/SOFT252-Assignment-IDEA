@@ -120,35 +120,35 @@ public class User
     }
 
     /**
-     * @param id the _id to set
+     * @param id the new contents to set _id to.
      */
     public void setId(ID id) {
         _id = id;
     }
 
     /**
-     * @param name the _name to set
+     * @param name the new contents to set _name to.
      */
     public void setName(String name) {
         _name = name;
     }
 
     /**
-     * @param surname the _surname to set
+     * @param surname the new contents to set _surname to.
      */
     public void setSurname(String surname) {
         _surname = surname;
     }
 
     /**
-     * @param address the _address to set
+     * @param address the new contents to set _address to.
      */
     public void setAddress(Address address) {
         _address = address;
     }
 
     /**
-     * @param password the _password to set
+     * @param password the new contents to set _password to.
      */
     public void setPassword(String password) {
         _password = password;

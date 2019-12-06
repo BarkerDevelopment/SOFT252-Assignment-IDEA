@@ -11,6 +11,7 @@ import java.util.EnumMap;
  */
 public class UserRepository
         implements I_Repository<User> {
+
     private static UserRepository _instance;
     private final EnumMap<Role, ArrayList<User>> _users;
 
@@ -58,6 +59,20 @@ public class UserRepository
     }
 
     /**
+     * Finds the user of the passed in ID.
+     *
+     * @param id the search ID.
+     * @return the User with the entered ID. Will return NULL if no User is found.
+     */
+    public User get(String id){
+        Role userRole = Role.fromString(id.charAt(0));
+
+        for(User user : getAll(userRole)) if(user.getId().toString().equals(id)) return user;
+
+        return null; // No User has the ID, therefore return NULL.
+    }
+
+    /**
      * Adds an item to the repository.
      *
      * @param item the new item.
@@ -95,20 +110,6 @@ public class UserRepository
      * @return TRUE if repository contains the user, otherwise FALSE.
      */
     public boolean contains(String id){
-        return find(id) != null;
-    }
-
-    /**
-     * Finds the user of the passed in ID.
-     *
-     * @param id the search ID.
-     * @return the User with the entered ID. Will return NULL if no User is found.
-     */
-    public User find(String id){
-        Role userRole = Role.fromString(id.charAt(0));
-
-        for(User user : getAll(userRole)) if(user.getId().toString().equals(id)) return user;
-
-        return null; // No User has the ID, therefore return NULL.
+        return get(id) != null;
     }
 }
