@@ -158,17 +158,17 @@ class UserRepositoryTest {
     public void testFind() {
         String id = "P1111";
         User expResult = _users[0];
-        User result = _instance.find(id);
+        User result = _instance.get(id);
         assertEquals(expResult, result);
 
         id = "S5555";
         expResult = _users[4];
-        result = _instance.find(id);
+        result = _instance.get(id);
         assertEquals(expResult, result);
 
         id = "A9999";
         expResult = null;
-        result = _instance.find(id);
+        result = _instance.get(id);
         assertEquals(expResult, result);
     }
 }

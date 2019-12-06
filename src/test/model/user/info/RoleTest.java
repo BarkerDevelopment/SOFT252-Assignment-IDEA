@@ -7,9 +7,6 @@ import soft252.model.user.info.Role;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RoleTest {
-    public RoleTest() {
-    }
-
     /**
      * Test of values method, of class Role.
      */
