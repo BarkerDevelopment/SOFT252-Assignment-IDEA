@@ -19,12 +19,10 @@ public class Message
      * Creates a message object.
      *
      * @param message the content of the message.
-     * @param sender the sender of the message.
      */
-    public Message(String message, I_MessageSender sender){
+    public Message(String message){
         _message = message;
         _datetime = LocalDateTime.now();
-        _sender = sender;
     }
 
     /**
@@ -67,14 +65,9 @@ public class Message
 
     /**
      * @param sender the new content of the _sender variable.
-     * @throws ClassCastException if sender doesn't inherit from the I_MessageSender interface.
      */
-    public void setSender(User sender) {
-        if(sender instanceof I_MessageSender) {
-            _sender = (I_MessageSender) sender;
-
-        }else{
-            throw new ClassCastException();
-        }
+    @Override
+    public void setSender(I_MessageSender sender) {
+        _sender =  sender;
     }
 }

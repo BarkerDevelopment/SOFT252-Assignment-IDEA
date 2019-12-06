@@ -9,17 +9,20 @@ public interface I_Message {
     /**
      * @return the _message variable. Represents the contents of the message.
      */
-    public String getMessage();
+    public abstract String getMessage();
 
     /**
      * @return the _datetime variable. Represents the time and date of when the message was sent.
      */
-    public LocalDateTime getDatetime();
+    public abstract LocalDateTime getDatetime();
 
     /**
      * @return the _sender variable. Represents the sender of the message.
      */
-    public I_MessageSender getSender();
+    public abstract I_MessageSender getSender();
 
-    // Setters are not included in the interface as they shouldn't be changed after the message is sent.
+    /**
+     * @param sender the new content of the _sender variable.
+     */
+    public abstract void setSender(I_MessageSender sender);
 }
