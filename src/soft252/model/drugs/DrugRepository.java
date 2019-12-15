@@ -83,7 +83,7 @@ public class DrugRepository
     public void remove(Drug item) {
         _drugs.remove(item);
     }
-
+    
     /**
      * Checks if the repository contains the item.
      *
@@ -133,8 +133,11 @@ public class DrugRepository
      */
     public void updateStock(Drug drug, int stockChange) throws StockLevelException{
         int newStockLevel = _drugs.get(drug) - stockChange;
-        if(newStockLevel > 0) _drugs.replace(drug, newStockLevel);
+        if(newStockLevel > 0) {
+            _drugs.replace(drug, newStockLevel);
 
-        throw new StockLevelException("Resulting stock change will produce a negative stock level.");
+        }else{
+            throw new StockLevelException("Resulting stock change will produce a negative stock level.");
+        }
     }
 }
