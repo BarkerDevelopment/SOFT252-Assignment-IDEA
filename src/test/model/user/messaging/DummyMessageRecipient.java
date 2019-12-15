@@ -1,4 +1,7 @@
-package soft252.model.user.messaging;
+package test.model.user.messaging;
+
+import soft252.model.user.messaging.I_Message;
+import soft252.model.user.messaging.I_MessageRecipient;
 
 import java.util.ArrayList;
 
@@ -6,7 +9,7 @@ import java.util.ArrayList;
  * A test class for message receiving.
  */
 public class DummyMessageRecipient implements I_MessageRecipient {
-    private final ArrayList<I_Message> _messages;
+    private final ArrayList< I_Message > _messages;
 
     /**
      * Default constructor.

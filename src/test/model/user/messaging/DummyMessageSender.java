@@ -1,4 +1,8 @@
-package soft252.model.user.messaging;
+package test.model.user.messaging;
+
+import soft252.model.user.messaging.I_Message;
+import soft252.model.user.messaging.I_MessageRecipient;
+import soft252.model.user.messaging.I_MessageSender;
 
 /**
  * A test class for message sending.
