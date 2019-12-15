@@ -1,7 +1,7 @@
 package soft252.model.user.messaging;
 
 /**
- * A test model for message sending.
+ * A test class for message sending.
  */
 public class DummyMessageSender implements I_MessageSender {
     /**

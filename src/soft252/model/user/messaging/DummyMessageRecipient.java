@@ -3,7 +3,7 @@ package soft252.model.user.messaging;
 import java.util.ArrayList;
 
 /**
- * A test model for message receiving.
+ * A test class for message receiving.
  */
 public class DummyMessageRecipient implements I_MessageRecipient {
     private final ArrayList<I_Message> _messages;
