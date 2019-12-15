@@ -31,6 +31,7 @@ public class Doctor extends User
      */
     public Doctor(String name, String surname, Address address, String password) {
         super(ROLE, name, surname, address, password);
+        _feedback = new ArrayList<>();
     }
 
     /**
@@ -44,6 +45,7 @@ public class Doctor extends User
      */
     public Doctor(String name, String surname, String password, long seed) {
         super(ROLE, name, surname, password, seed);
+        _feedback = new ArrayList<>();
     }
 
     /**
@@ -56,6 +58,7 @@ public class Doctor extends User
      */
     public Doctor(String idNumber, String name, String surname) {
         super(ROLE, idNumber, name, surname);
+        _feedback = new ArrayList<>();
     }
 
     /**
