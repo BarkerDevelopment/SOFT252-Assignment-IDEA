@@ -35,4 +35,9 @@ public interface I_Repository<T> {
      * @return TRUE if repository contains the item, otherwise FALSE.
      */
     public abstract boolean contains(T item);
+
+    /**
+     * Clears the repo of all items. This is mainly for testing purposes.
+     */
+    public abstract void clear();
 }

@@ -112,4 +112,12 @@ public class UserRepository
     public boolean contains(String id){
         return get(id) != null;
     }
+
+    /**
+     * Clears the repo of all items. This is mainly for testing purposes.
+     */
+    @Override
+    public void clear() {
+        _users.clear();
+    }
 }

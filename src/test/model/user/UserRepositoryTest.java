@@ -1,6 +1,6 @@
 package test.model.user;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import soft252.model.user.*;
@@ -13,7 +13,7 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserRepositoryTest {
-    private static UserRepository _instance;
+    private static UserRepository _repo;
     private static User[] _users = new User[]{
             new Patient(
                     "1111",
@@ -49,10 +49,12 @@ class UserRepositoryTest {
                     "Brockbank")
     };
 
-    @BeforeAll
+    @BeforeEach
     public static void setUpClass() {
-        _instance = UserRepository.getInstance();
-        for(User u: _users) _instance.add(u);
+        _repo = UserRepository.getInstance();
+
+        _repo.clear();
+        for(User u: _users) _repo.add(u);
     }
 
     /**
@@ -66,7 +68,7 @@ class UserRepositoryTest {
     public void testGetAll_0args() {
 
         ArrayList<User> expResult = new ArrayList<>(Arrays.asList(_users));
-        ArrayList<User> result = _instance.getAll();
+        ArrayList<User> result = _repo.getAll();
 
         for (User u : result) assertTrue(expResult.contains(u));
     }
@@ -78,19 +80,19 @@ class UserRepositoryTest {
     @DisplayName("getUsers")
     public void testGetAll_Role() {
         ArrayList<User> expResult = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(_users, 0, 3)));
-        ArrayList<User> result =  _instance.getAll(Role.PATIENT);
+        ArrayList<User> result =  _repo.getAll(Role.PATIENT);
         assertEquals(expResult, result);
 
         expResult = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(_users, 3, 4)));
-        result =  _instance.getAll(Role.ADMIN);
+        result =  _repo.getAll(Role.ADMIN);
         assertEquals(expResult, result);
 
         expResult = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(_users, 4, 5)));
-        result =  _instance.getAll(Role.SECRETARY);
+        result =  _repo.getAll(Role.SECRETARY);
         assertEquals(expResult, result);
 
         expResult = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(_users, 5, 6)));
-        result =  _instance.getAll(Role.DOCTOR);
+        result =  _repo.getAll(Role.DOCTOR);
         assertEquals(expResult, result);
     }
 
@@ -101,11 +103,11 @@ class UserRepositoryTest {
     @DisplayName("add")
     public void testAdd() {
         Doctor item = new Doctor("7777", "John", "Cena");
-        _instance.add(item);
+        _repo.add(item);
 
-        assertTrue(_instance.getAll(Role.DOCTOR).contains(item));
+        assertTrue(_repo.getAll(Role.DOCTOR).contains(item));
 
-        _instance.remove(item);
+        _repo.remove(item);
     }
 
     /**
@@ -114,10 +116,10 @@ class UserRepositoryTest {
     @Test
     @DisplayName("remove")
     public void testRemove() {
-        _instance.remove(_users[0]);
+        _repo.remove(_users[0]);
 
         ArrayList<User> expResult = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(_users, 1, 3)));
-        ArrayList<User> result =  _instance.getAll(Role.PATIENT);
+        ArrayList<User> result =  _repo.getAll(Role.PATIENT);
         assertEquals(expResult, result);
     }
 
@@ -128,10 +130,10 @@ class UserRepositoryTest {
     @DisplayName("contains")
     public void testContains_User() {
         User item = _users[0];
-        assertTrue(_instance.contains(item));
+        assertTrue(_repo.contains(item));
 
         item = new Doctor("4242", "John", "Cena");
-        assertFalse(_instance.contains(item));
+        assertFalse(_repo.contains(item));
     }
 
     /**
@@ -141,13 +143,13 @@ class UserRepositoryTest {
     @DisplayName("contains string")
     public void testContains_String() {
         String id = "P1111";
-        assertTrue(_instance.contains(id));
+        assertTrue(_repo.contains(id));
 
         id = "S5555";
-        assertTrue(_instance.contains(id));
+        assertTrue(_repo.contains(id));
 
         id = "A9999";
-        assertFalse(_instance.contains(id));
+        assertFalse(_repo.contains(id));
     }
 
     /**
@@ -158,17 +160,17 @@ class UserRepositoryTest {
     public void testFind() {
         String id = "P1111";
         User expResult = _users[0];
-        User result = _instance.get(id);
+        User result = _repo.get(id);
         assertEquals(expResult, result);
 
         id = "S5555";
         expResult = _users[4];
-        result = _instance.get(id);
+        result = _repo.get(id);
         assertEquals(expResult, result);
 
         id = "A9999";
         expResult = null;
-        result = _instance.get(id);
+        result = _repo.get(id);
         assertEquals(expResult, result);
     }
 }
