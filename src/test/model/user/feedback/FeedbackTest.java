@@ -13,7 +13,7 @@ class FeedbackTest {
     private static I_FeedbackRecipient _recipient;
 
     @BeforeAll
-    void setUp() {
+    static void setUp() {
         _f = new FeedbackFactory();
         _sender = new DummyFeedbackSender();
         _recipient = new DummyFeedbackRecipient();

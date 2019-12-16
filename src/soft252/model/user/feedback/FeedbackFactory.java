@@ -7,8 +7,8 @@ import soft252.exceptions.OutOfRangeException;
  */
 public class FeedbackFactory {
 
-    private static final int _ratingMin = 0;
-    private static final int _ratingMax = 10;
+    public static final int MIN_RATING = 1;
+    public static final int MAX_RATING = 10;
 
     /**
      * Creates a feedback object.
@@ -35,13 +35,12 @@ public class FeedbackFactory {
             return new Feedback(string);
 
         }else{
-            if(rating > _ratingMin && rating < _ratingMax){
+            if(rating >= MIN_RATING && rating <= MAX_RATING){
                 return new FeedbackWithRating(string, rating);
 
             }else{
-                throw new OutOfRangeException(String.format("Feedback rating must be between %d and %d.", _ratingMin, _ratingMax));
+                throw new OutOfRangeException(String.format("Feedback rating must be between %d and %d (inclusive).", MIN_RATING, MAX_RATING));
             }
-
         }
     }
 }
