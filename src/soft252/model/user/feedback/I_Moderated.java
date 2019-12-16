@@ -10,12 +10,7 @@ public interface I_Moderated {
     public abstract boolean isModerated();
 
     /**
-     * @param flag the value to set _isModerated flag to.
+     * Moderates a moderatable object.
      */
-    public abstract void setIsModerated(Boolean flag);
-
-    /**
-     * @return the new state of the _isModerated variable.
-     */
-    public abstract boolean toggleIsModerated();
+    public abstract void moderate();
 }

@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 public class Feedback
     implements I_Feedback{
 
-    private final LocalDateTime _dateTime;
-    private String _feedback;
-    private Boolean _isModerated;
+    protected final LocalDateTime _dateTime;
+    protected String _feedback;
+    protected Boolean _isModerated;
 
     /**
      * Creates a feedback object.
@@ -56,20 +56,11 @@ public class Feedback
     }
 
     /**
-     * @param flag the value to set _isModerated flag to.
+     * Moderates a moderatable object.
      */
     @Override
-    public void setIsModerated(Boolean flag) {
-        _isModerated = flag;
+    public void moderate() {
+        _isModerated = true;
     }
 
-    /**
-     * @return the new state of the _isModerated variable.
-     */
-    @Override
-    public boolean toggleIsModerated() {
-        _isModerated = ! _isModerated;
-
-        return _isModerated;
-    }
 }
