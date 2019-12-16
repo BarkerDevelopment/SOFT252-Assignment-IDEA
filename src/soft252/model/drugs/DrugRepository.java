@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class DrugRepository
         implements I_Repository<Drug> {
 
-    private DrugRepository _instance;
+    private static DrugRepository _instance;
     private HashMap<Drug, Integer> _drugs;
 
     /**
@@ -27,7 +27,7 @@ public class DrugRepository
      *
      * @return the instance of the repository.
      */
-    public DrugRepository getInstance(){
+    public static DrugRepository getInstance(){
         if(_instance == null) _instance = new DrugRepository();
 
         return _instance;
@@ -108,6 +108,14 @@ public class DrugRepository
     }
 
     /**
+     * Clears the repo of all items. This is mainly for testing purposes.
+     */
+    @Override
+    public void clear() {
+        _drugs.clear();
+    }
+
+    /**
      * @return the list of all items in the repo.
      */
     public HashMap<Drug, Integer> getStock() {
@@ -131,8 +139,8 @@ public class DrugRepository
      * @param stockChange the change in stock requested.
      * @throws StockLevelException if the change in stock results in a negative stock value.
      */
-    public void updateStock(Drug drug, int stockChange) throws StockLevelException{
-        int newStockLevel = _drugs.get(drug) - stockChange;
+    public void updateStock(Drug drug, int stockChange) throws StockLevelException, NullPointerException{
+        int newStockLevel = _drugs.get(drug) + stockChange;
         if(newStockLevel > 0) {
             _drugs.replace(drug, newStockLevel);
 

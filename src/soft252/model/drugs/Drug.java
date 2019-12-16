@@ -42,7 +42,7 @@ public class Drug
      */
     @Override
     public String getName() {
-        return null;
+        return _name;
     }
 
     /**
@@ -50,7 +50,7 @@ public class Drug
      */
     @Override
     public String getDescription() {
-        return null;
+        return _description;
     }
 
     /**
@@ -58,7 +58,7 @@ public class Drug
      */
     @Override
     public ArrayList< String > getSideEffects() {
-        return null;
+        return _sideEffects;
     }
 
     /**
