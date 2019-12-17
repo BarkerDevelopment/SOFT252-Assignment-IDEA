@@ -36,7 +36,7 @@ class FeedbackModeratorTest {
             e.printStackTrace();
         }
 
-        for (I_Feedback feedback: _moderatedFeedback) feedback.setIsModerated(true);
+        for (I_Feedback feedback: _moderatedFeedback) feedback.moderate();
 
         _feedback = new ArrayList<>();
         _feedback.addAll(_moderatedFeedback);

@@ -40,7 +40,7 @@ public class DummyFeedbackModerator implements I_FeedbackModerator {
      */
     @Override
     public void moderateFeedback(I_Feedback feedback) {
-        feedback.setIsModerated(true);
+        feedback.moderate();
     }
 
     /**
@@ -52,7 +52,7 @@ public class DummyFeedbackModerator implements I_FeedbackModerator {
     @Override
     public void moderateFeedback(I_Feedback feedback, String string) {
         feedback.setFeedback(string);
-        feedback.setIsModerated(true);
+        feedback.moderate();
     }
 
     /**
