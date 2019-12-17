@@ -1,5 +1,6 @@
 package soft252.model.appointment;
 
+import soft252.model.I_Completable;
 import soft252.model.drugs.I_Prescription;
 import soft252.model.user.Doctor;
 import soft252.model.user.Patient;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  * A class that encapsulates patient's appointments.
  */
 public class Appointment
-        implements I_Appointment {
+        implements I_Appointment, I_Completable {
 
     private final Patient _patient;
     private Doctor _doctor;
