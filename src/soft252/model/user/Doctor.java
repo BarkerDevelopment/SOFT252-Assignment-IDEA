@@ -1,5 +1,8 @@
 package soft252.model.user;
 
+import soft252.model.appointment.AppointmentRepository;
+import soft252.model.appointment.I_Appointment;
+import soft252.model.appointment.I_AppointmentParticipant;
 import soft252.model.user.feedback.I_Feedback;
 import soft252.model.user.feedback.I_FeedbackRecipient;
 import soft252.model.user.info.Address;
@@ -8,14 +11,14 @@ import soft252.model.user.messaging.I_Message;
 import soft252.model.user.messaging.I_MessageRecipient;
 import soft252.model.user.messaging.I_MessageSender;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
  * A User subclass for the system's doctor.
  */
 public class Doctor extends User
-    implements I_MessageSender,
-        I_FeedbackRecipient {
+    implements I_FeedbackRecipient, I_AppointmentParticipant, I_MessageSender {
 
     public static Role ROLE = Role.DOCTOR;
 
@@ -105,6 +108,38 @@ public class Doctor extends User
     @Override
     public void removeFeedback(I_Feedback feedback) {
         _feedback.remove(feedback);
+    }
+
+    /**
+     * @return all appointments associated with the User.
+     */
+    @Override
+    public ArrayList< I_Appointment > getAppointments() {
+        return AppointmentRepository.getInstance().get(this);
+    }
+
+    /**
+     * @return all future appointments associated with the User.
+     */
+    @Override
+    public ArrayList< I_Appointment > getFutureAppointments() {
+        ArrayList< I_Appointment > pastAppointments = AppointmentRepository.getInstance().get(this);
+        // Remove all dates from the past.
+        pastAppointments.removeIf(a -> a.getDateTime().compareTo(LocalDateTime.now()) < 0);
+
+        return pastAppointments;
+    }
+
+    /**
+     * @return all past appointments associated with the User.
+     */
+    @Override
+    public ArrayList< I_Appointment > getPastAppointments() {
+        ArrayList< I_Appointment > pastAppointments = AppointmentRepository.getInstance().get(this);
+        // Remove all dates from the future.
+        pastAppointments.removeIf(a -> a.getDateTime().compareTo(LocalDateTime.now()) >= 0);
+
+        return pastAppointments;
     }
 
     /**

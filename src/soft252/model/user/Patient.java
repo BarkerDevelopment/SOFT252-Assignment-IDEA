@@ -1,6 +1,10 @@
 package soft252.model.user;
 
+import soft252.model.appointment.AppointmentRepository;
+import soft252.model.appointment.I_Appointment;
+import soft252.model.appointment.I_AppointmentParticipant;
 import soft252.model.drugs.I_Prescription;
+import soft252.model.request.AccountCreationRequest;
 import soft252.model.user.feedback.I_Feedback;
 import soft252.model.user.feedback.I_FeedbackRecipient;
 import soft252.model.user.feedback.I_FeedbackSender;
@@ -9,18 +13,30 @@ import soft252.model.user.info.Gender;
 import soft252.model.user.info.Role;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
  * A User subclass for the system's patients.
  */
 public class Patient extends User
-    implements I_FeedbackSender {
+    implements I_AppointmentParticipant, I_FeedbackSender {
 
     private static Role ROLE = Role.PATIENT;
     private final LocalDate _dob;
     private final Gender _gender;
     private ArrayList< I_Prescription > _prescriptions;
+
+    /**
+     *
+     * @param request
+     */
+    public Patient(AccountCreationRequest request){
+        super(ROLE, request.getName(), request.getSurname(), request.getAddress(), request.getPassword());
+        _dob = request.getDob();
+        _gender = request.getGender();
+        _prescriptions = new ArrayList<>();
+    }
 
     /**
      * Creates an Patient object.
@@ -100,6 +116,56 @@ public class Patient extends User
      */
     public void setPrescriptions(ArrayList< I_Prescription > prescriptions) {
         _prescriptions = prescriptions;
+    }
+
+    /**
+     * Add a prescription to the patient's list of prescriptions.
+     *
+     * @param prescriptions the new prescription.
+     */
+    public void addPrescription(I_Prescription prescriptions){
+        _prescriptions.add(prescriptions);
+    }
+
+    /**
+     * Removes a prescription to the patient's list of prescriptions.
+     *
+     * @param prescriptions the target prescription.
+     */
+    public void removePrescription(I_Prescription prescriptions){
+        _prescriptions.remove(prescriptions);
+    }
+
+    /**
+     * @return all appointments associated with the User.
+     */
+    @Override
+    public ArrayList< I_Appointment > getAppointments() {
+        return AppointmentRepository.getInstance().get(this);
+    }
+
+    /**
+     * @return all future appointments associated with the User.
+     */
+    @Override
+    public ArrayList< I_Appointment > getFutureAppointments() {
+        ArrayList< I_Appointment > pastAppointments = AppointmentRepository.getInstance().get(this);
+        // Remove all dates from the past.
+        pastAppointments.removeIf(a -> a.getDateTime().compareTo(LocalDateTime.now()) < 0);
+
+        return pastAppointments;
+    }
+
+    /**
+     * @return all past appointments associated with the User.
+     */
+    @Override
+    public ArrayList< I_Appointment > getPastAppointments() {
+        ArrayList< I_Appointment > pastAppointments = AppointmentRepository.getInstance().get(this);
+        // Remove all dates from the future.
+        pastAppointments.removeIf(a -> a.getDateTime().compareTo(LocalDateTime.now()) >= 0);
+
+        return pastAppointments;
     }
 
     /**
