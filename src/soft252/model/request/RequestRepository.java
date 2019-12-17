@@ -8,9 +8,9 @@ import java.util.ArrayList;
  * A repository of all the requests in the system.
  */
 public class RequestRepository
-        implements I_Repository<I_Request> {
+        implements I_Repository< Request > {
     private static RequestRepository _instance;
-    private final ArrayList<I_Request> _requests;
+    private final ArrayList< Request > _requests;
 
     /**
      * Singleton constructor.
@@ -34,7 +34,7 @@ public class RequestRepository
      * @return the list of all items in the repo.
      */
     @Override
-    public ArrayList<I_Request> getAll() {
+    public ArrayList< Request > getAll() {
         return _requests;
     }
 
@@ -44,7 +44,7 @@ public class RequestRepository
      * @param item the new item.
      */
     @Override
-    public void add(I_Request item) {
+    public void add(Request item) {
         _requests.add(item);
     }
 
@@ -54,7 +54,7 @@ public class RequestRepository
      * @param item the target item.
      */
     @Override
-    public void remove(I_Request item) {
+    public void remove(Request item) {
         _requests.remove(item);
     }
 
@@ -65,7 +65,7 @@ public class RequestRepository
      * @return TRUE if repository contains the item, otherwise FALSE.
      */
     @Override
-    public boolean contains(I_Request item) {
+    public boolean contains(Request item) {
         return _requests.contains(item);
     }
 
