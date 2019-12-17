@@ -12,12 +12,12 @@ import java.time.LocalDate;
  */
 public class AccountCreationRequest extends Request {
 
-    private String _name;
-    private String _surname;
-    private Address _address;
-    private String _password;
-    private LocalDate _dob;
-    private Gender _gender;
+    private final String _name;
+    private final String _surname;
+    private final Address _address;
+    private final String _password;
+    private final LocalDate _dob;
+    private final Gender _gender;
 
     /**
      * Creates a patient request that encapsulates a patients details in order to create a Patient object once approved.

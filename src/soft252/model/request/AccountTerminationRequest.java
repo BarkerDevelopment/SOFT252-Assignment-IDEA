@@ -9,7 +9,7 @@ import soft252.model.user.messaging.Message;
  */
 public class AccountTerminationRequest extends Request{
 
-    private Patient _requester;
+    private final Patient _requester;
 
     /**
      * Creates a account termination request object that when approved will delete the Patient's account.

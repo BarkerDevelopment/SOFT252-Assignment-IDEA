@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class AppointmentRequest extends Request
     implements I_Appointment {
 
-    private Patient _patient;
+    private final Patient _patient;
     private Doctor _doctor;
     private LocalDateTime _dateTime;
 
