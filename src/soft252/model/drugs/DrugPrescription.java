@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class DrugPrescription
         implements I_Prescription {
     private Drug _drug;
-    private final LocalDate _startDate;
+    private LocalDate _startDate;
     private int _qty;
     private int _course;
 
@@ -56,6 +56,13 @@ public class DrugPrescription
     @Override
     public int getCourse() {
         return _course;
+    }
+
+    /**
+     * @param startDate the new contents to set the _startDate to.
+     */
+    public void setStartDate(LocalDate startDate) {
+        _startDate = startDate;
     }
 
     /**

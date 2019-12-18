@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 import soft252.exceptions.StockLevelException;
 import soft252.model.drugs.Drug;
 import soft252.model.drugs.DrugRepository;
+import soft252.model.drugs.DrugStockListing;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -77,7 +77,7 @@ class DrugRepositoryTest {
         assertTrue(result);
 
         int expResult2 = stock;
-        int result2 = _repo.getStock().get(_morphine);
+        int result2 = _repo.getStock(_morphine);
         assertEquals(result2, expResult2);
     }
 
@@ -98,12 +98,12 @@ class DrugRepositoryTest {
     @Test
     @DisplayName("getStock")
     void getStock() {
-        HashMap< Drug, Integer > expResult = new HashMap<>();
-        expResult.put(_paracetamol, 5);
-        expResult.put(_ibuprofen, 3);
+        ArrayList< DrugStockListing > expResult = new ArrayList<>();
+        expResult.add( new DrugStockListing(_paracetamol, 5));
+        expResult.add( new DrugStockListing(_ibuprofen, 3));
 
-        HashMap< Drug, Integer > result = _repo.getStock();
-        assertEquals(expResult, result);
+        ArrayList< DrugStockListing > result = _repo.getStock();
+        assertSame(expResult, result);
     }
 
     @Test

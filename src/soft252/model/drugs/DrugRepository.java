@@ -4,7 +4,7 @@ import soft252.exceptions.StockLevelException;
 import soft252.model.I_Repository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.stream.Collectors;
 
 /**
  * A repository of all the drugs in the system.
@@ -13,13 +13,13 @@ public class DrugRepository
         implements I_Repository<Drug> {
 
     private static DrugRepository _instance;
-    private HashMap<Drug, Integer> _drugs;
+    private ArrayList<DrugStockListing> _drugs;
 
     /**
      * Singleton constructor.
      */
     private DrugRepository() {
-        _drugs = new HashMap<>();
+        _drugs = new ArrayList<>();
     }
 
     /**
@@ -39,7 +39,13 @@ public class DrugRepository
     @Override
     public ArrayList< Drug > getAll() {
 
-        return new ArrayList<>(_drugs.keySet());
+        return new ArrayList<>(_drugs.stream().map(dl -> dl.getDrug()).collect(Collectors.toList()));
+    }
+
+    public DrugStockListing get(Drug item){
+        for (DrugStockListing dl : _drugs) if(dl.getDrug().equals(item)) return dl;
+
+        return null;
     }
 
     /**
@@ -49,7 +55,10 @@ public class DrugRepository
      * @return if the repository contains a drug with that name, return it. Otherwise return null.
      */
     public Drug get(String name) {
-        for (Drug d : _drugs.keySet()) if(d.getName().equals(name)) return d;
+        for (DrugStockListing dl : _drugs) {
+            Drug d = dl.getDrug();
+            if(d.getName().equals(name)) return d;
+        }
 
         return null;
     }
@@ -61,7 +70,7 @@ public class DrugRepository
      */
     @Override
     public void add(Drug item) {
-        _drugs.put(item, 0);
+        _drugs.add(new DrugStockListing(item, 0));
     }
 
     /**
@@ -71,7 +80,7 @@ public class DrugRepository
      * @param stock the new item's initial stock value.
      */
     public void add(Drug item, int stock) {
-        _drugs.put(item, stock);
+        _drugs.add(new DrugStockListing(item, stock));
     }
 
     /**
@@ -81,7 +90,7 @@ public class DrugRepository
      */
     @Override
     public void remove(Drug item) {
-        _drugs.remove(item);
+        _drugs.removeIf(dl -> dl.getDrug().equals(item));
     }
     
     /**
@@ -92,7 +101,7 @@ public class DrugRepository
      */
     @Override
     public boolean contains(Drug item) {
-        return _drugs.containsKey(item);
+        return get(item) != null;
     }
 
     /**
@@ -102,7 +111,7 @@ public class DrugRepository
      * @return TRUE if repository contains the item, otherwise FALSE.
      */
     public boolean contains(String name) {
-        for (Drug d : _drugs.keySet()) if(d.getName().equals(name)) return true;
+        for (DrugStockListing dl : _drugs) if(dl.getDrug().getName().equals(name)) return true;
 
         return false;
     }
@@ -118,7 +127,7 @@ public class DrugRepository
     /**
      * @return the list of all items in the repo.
      */
-    public HashMap<Drug, Integer> getStock() {
+    public ArrayList<DrugStockListing> getStock() {
         return _drugs;
     }
 
@@ -129,7 +138,7 @@ public class DrugRepository
      * @return the number of drug in stock.
      */
     public int getStock(Drug drug){
-        return _drugs.get(drug);
+        return get(drug).getStock();
     }
 
     /**
@@ -140,9 +149,11 @@ public class DrugRepository
      * @throws StockLevelException if the change in stock results in a negative stock value.
      */
     public void updateStock(Drug drug, int stockChange) throws StockLevelException, NullPointerException{
-        int newStockLevel = _drugs.get(drug) + stockChange;
+        DrugStockListing dl = get(drug);
+
+        int newStockLevel = dl.getStock() + stockChange;
         if(newStockLevel > 0) {
-            _drugs.replace(drug, newStockLevel);
+            dl.setStock(newStockLevel);
 
         }else{
             throw new StockLevelException("Resulting stock change will produce a negative stock level.");

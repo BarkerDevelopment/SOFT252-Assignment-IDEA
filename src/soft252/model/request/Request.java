@@ -7,7 +7,7 @@ public abstract class Request {
     /**
      * Approves the request.
      */
-    public final void approve(){
+    public final void approve() throws Exception {
         approveAction();
         destroy();
     }
@@ -23,7 +23,7 @@ public abstract class Request {
     /**
      * The action following request approval.
      */
-    protected abstract void approveAction();
+    protected abstract void approveAction() throws Exception;
 
     /**
      * The action following request denial.
@@ -32,8 +32,10 @@ public abstract class Request {
 
     /**
      * Deletes the current request from the repo.
+     *
+     * This can be overridden but it is not necessary.
      */
-    private void destroy(){
+    protected void destroy(){
         RequestRepository.getInstance().remove(this);
     }
 }
