@@ -9,6 +9,9 @@ import soft252.model.user.messaging.Message;
 
 import java.time.LocalDateTime;
 
+/**
+ *
+ */
 public class AppointmentRequest extends Request
     implements I_Appointment {
 

@@ -9,6 +9,9 @@ import soft252.model.user.messaging.Message;
 
 import java.util.ArrayList;
 
+/**
+ * A request for a new drug to be added to the systm.
+ */
 public class NewDrugRequest extends Request
     implements I_Treatment {
 
@@ -77,28 +80,28 @@ public class NewDrugRequest extends Request
     }
 
     /**
-     * @return
+     * @return the _startingQty variable.
      */
     public int getStartingQty() {
         return _startingQty;
     }
 
     /**
-     * @param description
+     * @param description the new drug description.
      */
     public void setDescription(String description) {
         _description = description;
     }
 
     /**
-     * @param sideEffects
+     * @param sideEffects the drugs side effects.
      */
     public void setSideEffects(ArrayList< String > sideEffects) {
         _sideEffects = sideEffects;
     }
 
     /**
-     * @param startingQty
+     * @param startingQty the drug's starting stock level.
      */
     public void setStartingQty(int startingQty) {
         _startingQty = startingQty;

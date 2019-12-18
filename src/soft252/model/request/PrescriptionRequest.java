@@ -11,7 +11,7 @@ import soft252.model.user.messaging.Message;
 import java.time.LocalDate;
 
 /**
- *
+ * A class that encapsulates a request for a prescription to be given to a patient.
  */
 public class PrescriptionRequest extends Request
         implements I_Observer<Integer> {

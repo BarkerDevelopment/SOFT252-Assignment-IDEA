@@ -6,7 +6,7 @@ import soft252.model.I_Observer;
 import java.util.ArrayList;
 
 /**
- *
+ * A class that encapsulates a drug's stock level.
  */
 public class DrugStockListing
         implements I_Observable< Integer > {
@@ -15,8 +15,10 @@ public class DrugStockListing
     private ArrayList< I_Observer< Integer > > _observers;
 
     /**
-     * @param drug
-     * @param stock
+     * Default constructor.
+     *
+     * @param drug the drug.
+     * @param stock the starting stock level.
      */
     public DrugStockListing(Drug drug, int stock) {
         _drug = drug;
@@ -25,21 +27,21 @@ public class DrugStockListing
     }
 
     /**
-     * @return
+     * @return the _drug variable.
      */
     public Drug getDrug() {
         return _drug;
     }
 
     /**
-     * @return
+     * @return the _stock variable.
      */
     public int getStock() {
         return _stock;
     }
 
     /**
-     * @param stock
+     * @param stock the new stock level.
      */
     public void setStock(int stock) {
         _stock = stock;
