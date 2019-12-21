@@ -4,6 +4,7 @@ import soft252.model.I_Repository;
 import soft252.model.user.Doctor;
 import soft252.model.user.Patient;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -60,8 +61,8 @@ public class AppointmentRepository
     /**
      * @return all appointments of a specified day.
      */
-    public ArrayList<I_Appointment> get(LocalDateTime dateTime) {
-        return new ArrayList<>( _appointments.stream().filter(a -> a.getDateTime().equals(dateTime)).collect(Collectors.toList()));
+    public ArrayList<I_Appointment> get(LocalDate date) {
+        return new ArrayList<>( _appointments.stream().filter(a -> a.getDateTime().toLocalDate().equals(date)).collect(Collectors.toList()));
     }
 
     /**
