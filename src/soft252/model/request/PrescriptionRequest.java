@@ -3,7 +3,8 @@ package soft252.model.request;
 import soft252.exceptions.StockLevelException;
 import soft252.model.I_Observer;
 import soft252.model.drugs.Drug;
-import soft252.model.drugs.DrugPrescription;
+import soft252.model.drugs.I_Prescription;
+import soft252.model.drugs.Prescription;
 import soft252.model.drugs.DrugRepository;
 import soft252.model.user.Patient;
 import soft252.model.user.messaging.Message;
@@ -17,7 +18,7 @@ public class PrescriptionRequest extends Request
         implements I_Observer<Integer> {
 
     private final Patient _patient;
-    private final DrugPrescription _prescription;
+    private final I_Prescription _prescription;
     private final Drug _drug;
     private int _drugStock;
 
@@ -27,12 +28,26 @@ public class PrescriptionRequest extends Request
      * @param patient the patient the prescription needs to be delivered to.
      * @param prescription the prescription the patient needs.
      */
-    public PrescriptionRequest(Patient patient, DrugPrescription prescription) {
+    public PrescriptionRequest(Patient patient, I_Prescription prescription) {
         _patient = patient;
         _prescription = prescription;
         _drug = (Drug) _prescription.getTreatment();
 
         DrugRepository.getInstance().get(_drug).subscribe(this);
+    }
+
+    /**
+     * @return the patient that the prescription is prescribed to.
+     */
+    public Patient getPatient() {
+        return _patient;
+    }
+
+    /**
+     * @return the patient's prescription.
+     */
+    public I_Prescription getPrescription() {
+        return _prescription;
     }
 
     /**

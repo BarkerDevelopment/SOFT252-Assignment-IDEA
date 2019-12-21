@@ -5,9 +5,9 @@ import java.time.LocalDate;
 /**
  * An object that encapsulates a prescription of drugs.
  */
-public class DrugPrescription
+public class Prescription
         implements I_Prescription {
-    private Drug _drug;
+    private I_Treatment _treatment;
     private LocalDate _startDate;
     private int _qty;
     private int _course;
@@ -15,12 +15,12 @@ public class DrugPrescription
     /**
      * Default constructor.
      *
-     * @param drug the type of drug.
+     * @param treatment the type of drug.
      * @param qty the quantity prescribed.
      * @param course how often to take the drug.
      */
-    public DrugPrescription(Drug drug, int qty, int course) {
-        _drug = drug;
+    public Prescription(I_Treatment treatment, int qty, int course) {
+        _treatment = treatment;
         _startDate = LocalDate.now();
         _qty = qty;
         _course = course;
@@ -39,7 +39,7 @@ public class DrugPrescription
      */
     @Override
     public I_Treatment getTreatment() {
-        return _drug;
+        return _treatment;
     }
 
     /**
@@ -61,6 +61,7 @@ public class DrugPrescription
     /**
      * @param startDate the new contents to set the _startDate to.
      */
+    @Override
     public void setStartDate(LocalDate startDate) {
         _startDate = startDate;
     }
@@ -68,8 +69,8 @@ public class DrugPrescription
     /**
      * @param drug the new contents to set _drug to.
      */
-    public void setTreatment(Drug drug) {
-        _drug = drug;
+    public void setTreatment(I_Treatment drug) {
+        _treatment = drug;
     }
 
     /**

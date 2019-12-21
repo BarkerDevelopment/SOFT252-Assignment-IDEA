@@ -1,13 +1,14 @@
 package soft252.model.drugs;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Defines the functions for a Treatment object.
  */
 public interface I_Prescription {
     /**
-     * @return the _startDate variable. This describes the day which the treatment starts..
+     * @return the _startDate variable. This describes the day which the treatment starts.
      */
     public LocalDate getStartDate();
 
@@ -25,4 +26,9 @@ public interface I_Prescription {
      * @return the _course variable. This describes the number of days over which the treatment should be completed.
      */
     public int getCourse();
+
+    /**
+     * @return the _startDate variable.
+     */
+    public void setStartDate(LocalDate startDate);
 }

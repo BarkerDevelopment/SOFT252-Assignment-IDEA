@@ -1,7 +1,8 @@
 package soft252.model.appointment;
 
 import soft252.model.I_Completable;
-import soft252.model.drugs.DrugPrescription;
+import soft252.model.drugs.Drug;
+import soft252.model.drugs.Prescription;
 import soft252.model.drugs.I_Prescription;
 import soft252.model.request.PrescriptionRequest;
 import soft252.model.request.RequestRepository;
@@ -35,6 +36,7 @@ public class Appointment
         _patient = patient;
         _doctor = doctor;
         _dateTime = dateTime;
+        _prescriptions = new ArrayList<>();
         _isCompleted = false;
     }
 
@@ -139,8 +141,8 @@ public class Appointment
         _isCompleted = true;
 
         _prescriptions.forEach( prescription -> {
-            if(prescription instanceof DrugPrescription){
-                RequestRepository.getInstance().add( new PrescriptionRequest(_patient, ( DrugPrescription ) prescription) );
+            if(prescription.getTreatment() instanceof Drug){
+                RequestRepository.getInstance().add( new PrescriptionRequest(_patient, prescription) );
 
             }else{
                 _patient.addPrescription(prescription); // If a prescription is not of a drug, just assign it to the patient.
