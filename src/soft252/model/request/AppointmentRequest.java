@@ -12,8 +12,7 @@ import java.time.LocalDateTime;
 /**
  *
  */
-public class AppointmentRequest extends Request
-    implements I_Appointment {
+public class AppointmentRequest extends Request{
 
     private final Patient _patient;
     private Doctor _doctor;
@@ -28,7 +27,6 @@ public class AppointmentRequest extends Request
     /**
      * @return the _patient variable.
      */
-    @Override
     public Patient getPatient() {
         return _patient;
     }
@@ -36,7 +34,6 @@ public class AppointmentRequest extends Request
     /**
      * @return the _doctor variable.
      */
-    @Override
     public Doctor getDoctor() {
         return _doctor;
     }
@@ -44,7 +41,6 @@ public class AppointmentRequest extends Request
     /**
      * @return the _dateTime variable.
      */
-    @Override
     public LocalDateTime getDateTime() {
         return _dateTime;
     }

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 /**
  * Defines the functions for an appointment object.
  */
-public interface I_Appointment {
+public interface I_Appointment extends I_Completable{
     /**
      * @return the _patient variable.
      */
