@@ -12,15 +12,16 @@ public class Message
         implements I_Message, I_Printable {
 
     private String _message;
-    private LocalDateTime _datetime;
-    private I_MessageSender _sender;
+    private final LocalDateTime _datetime;
+    private final I_MessageSender _sender;
 
     /**
      * Creates a message object.
      *
      * @param message the content of the message.
      */
-    public Message(String message){
+    public Message(I_MessageSender sender, String message){
+        _sender = sender;
         _message = message;
         _datetime = LocalDateTime.now();
     }
@@ -54,20 +55,5 @@ public class Message
      */
     public void setMessage(String message) {
         _message = message;
-    }
-
-    /**
-     * @param datetime the new content of the _datetime variable.
-     */
-    public void setDatetime(LocalDateTime datetime) {
-        _datetime = datetime;
-    }
-
-    /**
-     * @param sender the new content of the _sender variable.
-     */
-    @Override
-    public void setSender(I_MessageSender sender) {
-        _sender =  sender;
     }
 }

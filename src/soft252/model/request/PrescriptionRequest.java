@@ -62,7 +62,7 @@ public class PrescriptionRequest extends Request
             DrugRepository.getInstance().updateStock(_drug, -(prescriptionQty) );
 
             _patient.addPrescription(_prescription);
-            _patient.addMessage(new Message(String.format("Your prescription for %s can now be picked up.", _drug.getName() ) ) );
+            sendMessage(_patient, String.format("Your prescription for %s can now be picked up.", _drug.getName() ));
 
         }else{
             throw new StockLevelException("Insufficient stock to give prescription to patient.");
@@ -74,7 +74,7 @@ public class PrescriptionRequest extends Request
      */
     @Override
     protected void denyAction() {
-        _patient.addMessage(new Message(String.format("Your prescription for %s has been denied.", _drug.getName() ) ) );
+        sendMessage(_patient, String.format("Your prescription for %s has been denied.", _drug.getName() ));
     }
 
     /**

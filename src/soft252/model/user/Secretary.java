@@ -5,6 +5,7 @@ import soft252.model.user.info.Role;
 import soft252.model.user.messaging.I_Message;
 import soft252.model.user.messaging.I_MessageRecipient;
 import soft252.model.user.messaging.I_MessageSender;
+import soft252.model.user.messaging.Message;
 
 /**
  * A User subclass for the system's secretaries.
@@ -59,7 +60,7 @@ public class Secretary extends User
      * @param message   the message to be sent.
      */
     @Override
-    public void sendMessage(I_MessageRecipient recipient, I_Message message) {
-
+    public void sendMessage(I_MessageRecipient recipient, String message) {
+        recipient.addMessage(new Message(this, message));
     }
 }

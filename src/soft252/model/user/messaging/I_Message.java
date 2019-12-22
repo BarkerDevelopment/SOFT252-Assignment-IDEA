@@ -20,9 +20,4 @@ public interface I_Message {
      * @return the _sender variable. Represents the sender of the message.
      */
     public abstract I_MessageSender getSender();
-
-    /**
-     * @param sender the new content of the _sender variable.
-     */
-    public abstract void setSender(I_MessageSender sender);
 }

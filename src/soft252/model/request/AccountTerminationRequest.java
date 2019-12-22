@@ -41,6 +41,6 @@ public class AccountTerminationRequest extends Request{
      */
     @Override
     protected void denyAction() {
-        _requester.addMessage( new Message("Your account termination request has been denied.") );
+        sendMessage(_requester, "Your account termination request has been denied.");
     }
 }

@@ -21,9 +21,13 @@ class MessageTest {
     @Test
     @DisplayName("sendMessage")
     void sendMessage() {
-        Message message = new Message("This is a test.");
-        _sender.sendMessage(_recipient, message);
+        Message message = new Message(_sender, "This is a test.");
 
-        assertTrue(_recipient.getMessages().contains(message));
+        _sender.sendMessage(_recipient, "This is a test.");
+
+        assertTrue(
+                _recipient.getMessages().get(0).getMessage().equals(message.getMessage()) &&
+                        _recipient.getMessages().get(0).getSender().equals(message.getSender())
+                );
     }
 }

@@ -1,9 +1,15 @@
 package soft252.model.request;
 
+import soft252.model.user.messaging.I_Message;
+import soft252.model.user.messaging.I_MessageRecipient;
+import soft252.model.user.messaging.I_MessageSender;
+import soft252.model.user.messaging.Message;
+
 /**
  * Template pattern for a request as approval/denial end in the request being deleted from the appropriate repository.
  */
-public abstract class Request {
+public abstract class Request
+    implements I_MessageSender{
     /**
      * Approves the request.
      */
@@ -37,5 +43,16 @@ public abstract class Request {
      */
     protected void destroy(){
         RequestRepository.getInstance().remove(this);
+    }
+
+    /**
+     * Sends a message to another user.
+     *
+     * @param recipient the target user.
+     * @param message the message to be sent.
+     */
+    @Override
+    public final void sendMessage(I_MessageRecipient recipient, String message){
+        recipient.addMessage(new Message(this, message));
     }
 }

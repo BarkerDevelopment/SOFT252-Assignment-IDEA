@@ -11,5 +11,5 @@ public interface I_MessageSender {
      * @param recipient the target user.
      * @param message the message to be sent.
      */
-    public abstract void sendMessage(I_MessageRecipient recipient, I_Message message);
+    public abstract void sendMessage(I_MessageRecipient recipient, String message);
 }

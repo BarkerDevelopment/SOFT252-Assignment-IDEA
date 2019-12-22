@@ -121,7 +121,7 @@ public class NewDrugRequest extends Request
             repository.add(new Drug(_name, _description, _sideEffects), _startingQty);
         }
 
-        _doctor.addMessage(new Message(String.format("Your drug request for %s has been approved.", _name)));
+        sendMessage(_doctor, String.format("Your drug request for %s has been approved.", _name));
     }
 
     /**
@@ -129,6 +129,6 @@ public class NewDrugRequest extends Request
      */
     @Override
     protected void denyAction() {
-        _doctor.addMessage(new Message(String.format("Your drug request for %s has been denied.", _name)));
+        sendMessage(_doctor, String.format("Your drug request for %s has been denied.", _name));
     }
 }

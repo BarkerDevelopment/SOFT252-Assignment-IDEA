@@ -10,6 +10,7 @@ import soft252.model.user.info.Role;
 import soft252.model.user.messaging.I_Message;
 import soft252.model.user.messaging.I_MessageRecipient;
 import soft252.model.user.messaging.I_MessageSender;
+import soft252.model.user.messaging.Message;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -149,7 +150,7 @@ public class Doctor extends User
      * @param message   the message to be sent.
      */
     @Override
-    public void sendMessage(I_MessageRecipient recipient, I_Message message) {
-        recipient.addMessage(message);
+    public void sendMessage(I_MessageRecipient recipient, String message) {
+        recipient.addMessage(new Message(this, message));
     }
 }

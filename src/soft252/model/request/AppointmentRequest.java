@@ -66,8 +66,8 @@ public class AppointmentRequest extends Request{
     protected void approveAction() {
         AppointmentRepository.getInstance().add( new Appointment(_patient, _doctor, _dateTime) );
 
-        _patient.addMessage(new Message(String.format("You have an appointment with Dr. %s at %s.", _doctor.getSurname(), _dateTime.toString())));
-        _doctor.addMessage(new Message(String.format("%s (%s) has booked an appointment with you at %s.", _patient.getName(), _patient.getId().toString(), _dateTime.toString()) ) );
+        sendMessage(_patient, String.format("You have an appointment with Dr. %s at %s.", _doctor.getSurname(), _dateTime.toString()));
+        sendMessage(_doctor, String.format("%s (%s) has booked an appointment with you at %s.", _patient.getName(), _patient.getId().toString(), _dateTime.toString()));
     }
 
     /**
@@ -75,6 +75,6 @@ public class AppointmentRequest extends Request{
      */
     @Override
     protected void denyAction() {
-        _patient.addMessage(new Message(String.format("Your appointment request on %s with Dr. %s has been denied.", _dateTime.toString(), _doctor.getSurname()) ) );
+        sendMessage(_patient, String.format("Your appointment request on %s with Dr. %s has been denied.", _dateTime.toString(), _doctor.getSurname()));
     }
 }
