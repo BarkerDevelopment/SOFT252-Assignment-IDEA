@@ -9,8 +9,10 @@ import soft252.model.request.RequestRepository;
 import soft252.model.user.Doctor;
 import soft252.model.user.Patient;
 
+import java.sql.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A class that encapsulates patient's appointments.
@@ -38,6 +40,14 @@ public class Appointment
         _dateTime = dateTime;
         _prescriptions = new ArrayList<>();
         _isCompleted = false;
+    }
+
+    /**
+     * @return the participants of the appointment.
+     */
+    @Override
+    public ArrayList< I_AppointmentParticipant > getParticipants() {
+        return new ArrayList<>(Arrays.asList(_doctor, _patient));
     }
 
     /**

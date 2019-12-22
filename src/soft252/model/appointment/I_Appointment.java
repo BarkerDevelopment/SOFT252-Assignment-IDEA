@@ -5,11 +5,17 @@ import soft252.model.user.Doctor;
 import soft252.model.user.Patient;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 /**
  * Defines the functions for an appointment object.
  */
 public interface I_Appointment extends I_Completable{
+    /**
+     * @return the participants of the appointment.
+     */
+    public abstract ArrayList<I_AppointmentParticipant> getParticipants();
+
     /**
      * @return the _patient variable.
      */

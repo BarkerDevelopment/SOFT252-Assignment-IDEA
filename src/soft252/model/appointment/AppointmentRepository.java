@@ -5,7 +5,6 @@ import soft252.model.user.Doctor;
 import soft252.model.user.Patient;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -45,24 +44,21 @@ public class AppointmentRepository
     }
 
     /**
-     * @return all appointments of a specific doctor.
+     * @return all appointments of a specific participant.
      */
-    public ArrayList<I_Appointment> get(Doctor doctor) {
-        return new ArrayList<>( _appointments.stream().filter(a -> a.getDoctor().equals(doctor)).collect(Collectors.toList()));
-    }
-
-    /**
-     * @return all appointments of a specific patient.
-     */
-    public ArrayList<I_Appointment> get(Patient patient) {
-        return new ArrayList<>( _appointments.stream().filter(a -> a.getPatient().equals(patient)).collect(Collectors.toList()));
+    public ArrayList<I_Appointment> get(I_AppointmentParticipant participant){
+        return new ArrayList<>( _appointments.stream().filter(
+                a -> a.getParticipants().contains(participant)
+            ).collect(Collectors.toList()));
     }
 
     /**
      * @return all appointments of a specified day.
      */
     public ArrayList<I_Appointment> get(LocalDate date) {
-        return new ArrayList<>( _appointments.stream().filter(a -> a.getDateTime().toLocalDate().equals(date)).collect(Collectors.toList()));
+        return new ArrayList<>( _appointments.stream().filter(
+                a -> a.getDateTime().toLocalDate().equals(date)
+        ).collect(Collectors.toList()));
     }
 
     /**
