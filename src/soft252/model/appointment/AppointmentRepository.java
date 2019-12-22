@@ -39,7 +39,7 @@ public class AppointmentRepository
      * @return the list of all items in the repo.
      */
     @Override
-    public ArrayList<I_Appointment> getAll() {
+    public ArrayList<I_Appointment> get() {
         return _appointments;
     }
 

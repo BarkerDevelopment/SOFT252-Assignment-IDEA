@@ -39,7 +39,7 @@ public class UserRepository
      * @return the list of all items in the repo.
      */
     @Override
-    public ArrayList<User> getAll() {
+    public ArrayList<User> get() {
         ArrayList<User> allUsers = new ArrayList<>();
 
         for(Role r : Role.values()) allUsers.addAll(_users.get(r));

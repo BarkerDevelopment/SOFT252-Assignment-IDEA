@@ -34,7 +34,7 @@ public class RequestRepository
      * @return the list of all items in the repo.
      */
     @Override
-    public ArrayList< Request > getAll() {
+    public ArrayList< Request > get() {
         return _requests;
     }
 

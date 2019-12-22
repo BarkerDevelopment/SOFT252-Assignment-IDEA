@@ -37,7 +37,7 @@ public class DrugRepository
      * @return the list of all items in the repo.
      */
     @Override
-    public ArrayList< Drug > getAll() {
+    public ArrayList< Drug > get() {
 
         return new ArrayList<>(_drugs.stream().map(dl -> dl.getDrug()).collect(Collectors.toList()));
     }

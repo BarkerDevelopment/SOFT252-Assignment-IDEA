@@ -12,7 +12,7 @@ public interface I_Repository<T> {
     /**
      * @return the list of all items in the repo.
      */
-    public abstract ArrayList<T> getAll();
+    public abstract ArrayList<T> get();
 
     /**
      * Adds an item to the repository.

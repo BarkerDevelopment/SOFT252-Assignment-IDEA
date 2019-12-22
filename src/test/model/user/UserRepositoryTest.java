@@ -68,7 +68,7 @@ class UserRepositoryTest {
     public void testGetAll_0args() {
 
         ArrayList<User> expResult = new ArrayList<>(Arrays.asList(_users));
-        ArrayList<User> result = _repo.getAll();
+        ArrayList<User> result = _repo.get();
 
         for (User u : result) assertTrue(expResult.contains(u));
     }

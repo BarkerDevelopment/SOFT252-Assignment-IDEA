@@ -35,7 +35,7 @@ class DrugRepositoryTest {
     @DisplayName("getAll")
     void getAll() {
         Drug[] expResult = new Drug[0]; new ArrayList<>(List.of(_ibuprofen, _paracetamol, _morphine)).toArray(expResult);
-        Drug[] result = new Drug[0]; _repo.getAll().toArray();
+        Drug[] result = new Drug[0]; _repo.get().toArray();
 
         assertArrayEquals(expResult, result);
     }
@@ -54,7 +54,7 @@ class DrugRepositoryTest {
     void remove() {
         _repo.remove(_paracetamol);
 
-        boolean result = _repo.getAll().contains(_paracetamol);
+        boolean result = _repo.get().contains(_paracetamol);
         assertFalse(result);
     }
 
@@ -63,7 +63,7 @@ class DrugRepositoryTest {
     void add() {
         _repo.add(_paracetamol);
 
-        boolean result = _repo.getAll().contains(_paracetamol);
+        boolean result = _repo.get().contains(_paracetamol);
         assertTrue(result);
     }
 
@@ -73,7 +73,7 @@ class DrugRepositoryTest {
         int stock = 9;
         _repo.add(_morphine, stock);
 
-        boolean result = _repo.getAll().contains(_morphine);
+        boolean result = _repo.get().contains(_morphine);
         assertTrue(result);
 
         int expResult2 = stock;

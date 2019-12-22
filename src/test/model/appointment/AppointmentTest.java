@@ -64,7 +64,7 @@ class AppointmentTest {
      * @return TRUE if found, FALSE otherwise.
      */
     private boolean containsPrescriptionRequest(Patient patient, Prescription prescription){
-        for (Request request : RequestRepository.getInstance().getAll())
+        for (Request request : RequestRepository.getInstance().get())
         if(request instanceof PrescriptionRequest)
             if (( (PrescriptionRequest) request ).getPrescription().equals(prescription) &&
                     ( (PrescriptionRequest) request ).getPatient().equals(patient)) return true;
