@@ -2,14 +2,12 @@ package soft252.model.appointment;
 
 import soft252.model.I_Completable;
 import soft252.model.drugs.Drug;
-import soft252.model.drugs.Prescription;
 import soft252.model.drugs.I_Prescription;
 import soft252.model.request.PrescriptionRequest;
 import soft252.model.request.RequestRepository;
 import soft252.model.user.Doctor;
 import soft252.model.user.Patient;
 
-import java.sql.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +27,7 @@ public class Appointment
 
     /**
      * Default appointment constructor.
+     * Additionally, this constructor adds the resultant object to its corresponding repository: AppointmentRepository.
      *
      * @param patient the patient.
      * @param doctor the doctor.
@@ -40,6 +39,8 @@ public class Appointment
         _dateTime = dateTime;
         _prescriptions = new ArrayList<>();
         _isCompleted = false;
+
+        AppointmentRepository.getInstance().add(this);
     }
 
     /**

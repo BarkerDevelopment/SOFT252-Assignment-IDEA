@@ -2,7 +2,6 @@ package soft252.model.request;
 
 import soft252.model.user.Patient;
 import soft252.model.user.UserRepository;
-import soft252.model.user.messaging.Message;
 
 /**
  * A class that encapsulates a request to delete an existing Patient object from the repository.
@@ -12,12 +11,15 @@ public class AccountTerminationRequest extends Request{
     private final Patient _requester;
 
     /**
-     * Creates a account termination request object that when approved will delete the Patient's account.
+     * Default constructor.
+     * Additionally, this constructor adds the resultant object to its corresponding repository: RequestRepository.
      *
      * @param requester the Patient that requested the account termination.
      */
     public AccountTerminationRequest(Patient requester) {
         _requester = requester;
+
+        RequestRepository.getInstance().add(this);
     }
 
     /**

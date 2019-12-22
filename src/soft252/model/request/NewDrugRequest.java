@@ -5,12 +5,11 @@ import soft252.model.drugs.Drug;
 import soft252.model.drugs.DrugRepository;
 import soft252.model.drugs.I_Treatment;
 import soft252.model.user.Doctor;
-import soft252.model.user.messaging.Message;
 
 import java.util.ArrayList;
 
 /**
- * A request for a new drug to be added to the systm.
+ * A class that encapsulates a request for a new drug to be added to the system.
  */
 public class NewDrugRequest extends Request
     implements I_Treatment {
@@ -22,9 +21,11 @@ public class NewDrugRequest extends Request
     private int _startingQty;
 
     /**
+     * A constructor that does not specify the quantity of the drug required.
+     * Additionally, this constructor adds the resultant object to its corresponding repository: RequestRepository.
      *
-     * @param requester
-     * @param name
+     * @param requester the doctor that requested the drug.
+     * @param name the name of the drug.
      */
     public NewDrugRequest(Doctor requester, String name) throws DrugDuplicateException {
         if(DrugRepository.getInstance().contains(name)) throw new DrugDuplicateException();
@@ -32,13 +33,17 @@ public class NewDrugRequest extends Request
         _doctor = requester;
         _name = name;
         _sideEffects = new ArrayList<>();
+
+        RequestRepository.getInstance().add(this);
     }
 
     /**
+     * A constructor that does not specify the quantity of the drug required.
+     * Additionally, this constructor adds the resultant object to its corresponding repository: RequestRepository.
      *
-     * @param requester
-     * @param name
-     * @param qty
+     * @param requester the doctor that requested the drug.
+     * @param name the name of the drug.
+     * @param qty the quantity required.
      */
     public NewDrugRequest(Doctor requester, String name, int qty) throws DrugDuplicateException {
         if(DrugRepository.getInstance().contains(name)) throw new DrugDuplicateException();

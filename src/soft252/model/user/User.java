@@ -23,6 +23,7 @@ public class User
 
     /**
      * Creates a User object.
+     * Additionally, this constructor adds the resultant object to its corresponding repository: UserRepository.
      *
      * @param role the User's role. This should be predefined as the subclass _role variable.
      * @param name the User's name.
@@ -37,6 +38,8 @@ public class User
         _address = address;
         _password = password;
         _messages = new ArrayList<>();
+
+        UserRepository.getInstance().add(this);
     }
 
     /**
@@ -59,8 +62,9 @@ public class User
     }
 
     /**
-     * Creates a bare dummy User object for testing purposes. The name and surname are used to provide another element of
-     * individuality to increase ease of testing rather than just looking at IDs.
+     * Creates a bare dummy User object for testing purposes.
+     * The name and surname are used to provide another element of individuality to increase ease of testing rather than
+     * just looking at IDs.
      *
      * @param role the User's role. This should be predefined as the subclass _role variable.
      * @param idNumber the User's ID number. This will be added to the User role string to create the User ID.

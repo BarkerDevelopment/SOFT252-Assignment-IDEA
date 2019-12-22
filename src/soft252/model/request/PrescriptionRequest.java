@@ -4,10 +4,8 @@ import soft252.exceptions.StockLevelException;
 import soft252.model.I_Observer;
 import soft252.model.drugs.Drug;
 import soft252.model.drugs.I_Prescription;
-import soft252.model.drugs.Prescription;
 import soft252.model.drugs.DrugRepository;
 import soft252.model.user.Patient;
-import soft252.model.user.messaging.Message;
 
 import java.time.LocalDate;
 
@@ -24,11 +22,13 @@ public class PrescriptionRequest extends Request
 
     /**
      * Default constructor.
+     * Additionally, this constructor adds the resultant object to its corresponding repository: RequestRepository.
      *
      * @param patient the patient the prescription needs to be delivered to.
      * @param prescription the prescription the patient needs.
      */
     public PrescriptionRequest(Patient patient, I_Prescription prescription) {
+        super();
         _patient = patient;
         _prescription = prescription;
         _drug = (Drug) _prescription.getTreatment();

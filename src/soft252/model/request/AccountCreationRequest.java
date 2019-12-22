@@ -20,7 +20,8 @@ public class AccountCreationRequest extends Request {
     private final Gender _gender;
 
     /**
-     * Creates a patient request that encapsulates a patients details in order to create a Patient object once approved.
+     * Default constructor.
+     * Additionally, this constructor adds the resultant object to its corresponding repository: RequestRepository.
      *
      * @param name the Patient's name.
      * @param surname the Patient's surname.
@@ -36,6 +37,8 @@ public class AccountCreationRequest extends Request {
         _password = password;
         _dob = dob;
         _gender = gender;
+
+        RequestRepository.getInstance().add(this);
     }
 
     /**

@@ -2,15 +2,13 @@ package soft252.model.request;
 
 import soft252.model.appointment.Appointment;
 import soft252.model.appointment.AppointmentRepository;
-import soft252.model.appointment.I_Appointment;
 import soft252.model.user.Doctor;
 import soft252.model.user.Patient;
-import soft252.model.user.messaging.Message;
 
 import java.time.LocalDateTime;
 
 /**
- *
+ * A class that encapsulates a request for an appointment.
  */
 public class AppointmentRequest extends Request{
 
@@ -18,10 +16,20 @@ public class AppointmentRequest extends Request{
     private Doctor _doctor;
     private LocalDateTime _dateTime;
 
+    /**
+     * Default constructor.
+     * Additionally, this constructor adds the resultant object to its corresponding repository: RequestRepository.
+     *
+     * @param requester the patient requesting the appointment.
+     * @param doctor the requested doctor.
+     * @param dateTime the requested dateTime for the appointment.
+     */
     public AppointmentRequest(Patient requester, Doctor doctor, LocalDateTime dateTime) {
         _patient = requester;
         _doctor = doctor;
         _dateTime = dateTime;
+
+        RequestRepository.getInstance().add(this);
     }
 
     /**
