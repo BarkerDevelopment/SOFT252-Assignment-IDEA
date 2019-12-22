@@ -1,9 +1,13 @@
 package soft252.model.drugs;
 
 import soft252.exceptions.StockLevelException;
+import soft252.model.I_Observable;
+import soft252.model.I_Observer;
 import soft252.model.I_Repository;
+import soft252.model.request.PrescriptionRequest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -11,6 +15,78 @@ import java.util.stream.Collectors;
  */
 public class DrugRepository
         implements I_Repository<Drug> {
+
+    /**
+     * A class that encapsulates a drug's stock level.
+     */
+    @SuppressWarnings("InnerClassMayBeStatic")
+    private class DrugStockListing
+            implements I_Observable< Integer > {
+        private Drug _drug;
+        private int _stock;
+        private ArrayList< I_Observer< Integer > > _observers;
+
+        /**
+         * Default constructor.
+         *
+         * @param drug the drug.
+         * @param stock the starting stock level.
+         */
+        public DrugStockListing(Drug drug, int stock) {
+            _drug = drug;
+            _stock = stock;
+            _observers = new ArrayList<>();
+        }
+
+        /**
+         * @return the _drug variable.
+         */
+        public Drug getDrug() {
+            return _drug;
+        }
+
+        /**
+         * @return the _stock variable.
+         */
+        public int getStock() {
+            return _stock;
+        }
+
+        /**
+         * @param stock the new stock level.
+         */
+        public void setStock(int stock) {
+            _stock = stock;
+        }
+
+        /**
+         * Subscribes an observer to the observable.
+         *
+         * @param o the observer wishing to observe the observable.
+         */
+        @Override
+        public void subscribe(I_Observer< Integer > o) {
+            if(!_observers.contains(o)) _observers.add(o);
+        }
+
+        /**
+         * Unsubscribes an observer from the observable.
+         *
+         * @param o the observer wishing to stop observing the observable.
+         */
+        @Override
+        public void unsubscribe(I_Observer< Integer > o) {
+            _observers.remove(o);
+        }
+
+        /**
+         * Notifies all observers.
+         */
+        @Override
+        public void publish() {
+            _observers.forEach(o -> o.update(_stock));
+        }
+    }
 
     private static DrugRepository _instance;
     private ArrayList<DrugStockListing> _drugs;
@@ -40,12 +116,6 @@ public class DrugRepository
     public ArrayList< Drug > get() {
 
         return new ArrayList<>(_drugs.stream().map(dl -> dl.getDrug()).collect(Collectors.toList()));
-    }
-
-    public DrugStockListing get(Drug item){
-        for (DrugStockListing dl : _drugs) if(dl.getDrug().equals(item)) return dl;
-
-        return null;
     }
 
     /**
@@ -127,8 +197,11 @@ public class DrugRepository
     /**
      * @return the list of all items in the repo.
      */
-    public ArrayList<DrugStockListing> getStock() {
-        return _drugs;
+    public HashMap<Drug, Integer> getStock() {
+        HashMap<Drug, Integer> stock = new HashMap<>();
+        _drugs.forEach(dl -> stock.put(dl.getDrug(), dl.getStock()));
+
+        return stock;
     }
 
     /**
@@ -137,7 +210,7 @@ public class DrugRepository
      * @param drug the target drug.
      * @return the number of drug in stock.
      */
-    public int getStock(Drug drug){
+    public int getStock(Drug drug) throws NullPointerException{
         return get(drug).getStock();
     }
 
@@ -158,5 +231,39 @@ public class DrugRepository
         }else{
             throw new StockLevelException("Resulting stock change will produce a negative stock level.");
         }
+    }
+
+    /**
+     * Subscribes an o to the observable.
+     *
+     * @param o the o wishing to observe the observable.
+     */
+    public void subscribe(PrescriptionRequest o) {
+        Drug drug = (Drug) (o).getPrescription().getTreatment();
+
+        get(drug).subscribe(o);
+    }
+
+    /**
+     * Unsubscribes an o from the observable.
+     *
+     * @param o the o wishing to stop observing the observable.
+     */
+    public void unsubscribe(PrescriptionRequest o) {
+        Drug drug = (Drug) (o).getPrescription().getTreatment();
+
+        get(drug).unsubscribe(o);
+    }
+
+    /**
+     * Gets a DrugStockListing for a specific drug.
+     *
+     * @param item the target drug.
+     * @return the drug's DrugStockListingObject.
+     */
+    private DrugStockListing get(Drug item){
+        for (DrugStockListing dl : _drugs) if(dl.getDrug().equals(item)) return dl;
+
+        return null;
     }
 }

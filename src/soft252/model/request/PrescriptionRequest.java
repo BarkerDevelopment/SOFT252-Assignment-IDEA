@@ -33,7 +33,7 @@ public class PrescriptionRequest extends Request
         _prescription = prescription;
         _drug = (Drug) _prescription.getTreatment();
 
-        DrugRepository.getInstance().get(_drug).subscribe(this);
+        DrugRepository.getInstance().subscribe(this);
     }
 
     /**
@@ -83,7 +83,7 @@ public class PrescriptionRequest extends Request
      */
     @Override
     protected void destroy(){
-        DrugRepository.getInstance().get(_drug).unsubscribe(this);
+        DrugRepository.getInstance().unsubscribe(this);
         super.destroy();
     }
 
