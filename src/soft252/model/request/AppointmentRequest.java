@@ -1,11 +1,15 @@
 package soft252.model.request;
 
+import soft252.exceptions.AppointmentClashException;
 import soft252.model.appointment.Appointment;
 import soft252.model.appointment.AppointmentRepository;
+import soft252.model.appointment.I_Appointment;
 import soft252.model.user.Doctor;
 import soft252.model.user.Patient;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * A class that encapsulates a request for an appointment.
@@ -73,11 +77,26 @@ public class AppointmentRequest extends Request{
      * The action following request approval.
      */
     @Override
-    protected void approveAction() {
-        AppointmentRepository.getInstance().add( new Appointment(_patient, _doctor, _dateTime) );
+    protected void approveAction() throws AppointmentClashException {
+        AppointmentRepository repo = AppointmentRepository.getInstance();
 
-        sendMessage(_patient, String.format("You have an appointment with Dr. %s at %s.", _doctor.getSurname(), _dateTime.toString()));
-        sendMessage(_doctor, String.format("%s (%s) has booked an appointment with you at %s.", _patient.getName(), _patient.getId().toString(), _dateTime.toString()));
+        // Retrieves all appointments at the request's time that involve either one of the participants.
+        ArrayList< I_Appointment > clashAppointments = new ArrayList<>(repo.get(_dateTime.toLocalDate())
+                .stream()
+                .filter(a -> a.getParticipants().contains(_patient) || a.getParticipants().contains(_doctor))
+                .collect(Collectors.toList())
+        );
+
+        // Ensures both the doctor and the patient are available for the appointment.
+        if(clashAppointments.isEmpty()){
+            new Appointment(_patient, _doctor, _dateTime);
+
+            sendMessage(_patient, String.format("You have an appointment with Dr. %s at %s.", _doctor.getSurname(), _dateTime.toString()));
+            sendMessage(_doctor, String.format("%s (%s) has booked an appointment with you at %s.", _patient.getName(), _patient.getId().toString(), _dateTime.toString()));
+
+        }else{
+            throw new AppointmentClashException("A participant cannot make this appointment due to another appointment at the same time.");
+        }
     }
 
     /**
