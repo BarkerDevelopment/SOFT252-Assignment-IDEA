@@ -1,5 +1,6 @@
 package test.model.user;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,6 @@ class UserRepositoryTest {
     public void setUpClass() {
         _repo = UserRepository.getInstance();
 
-        _repo.clear();
         _users = new User[]{
                 new Patient(
                         "1111",
@@ -59,6 +59,11 @@ class UserRepositoryTest {
                         "Sophie",
                         "Brockbank").include()
         };
+    }
+
+    @AfterEach
+    void teardown(){
+        _repo.clear();
     }
 
     /**

@@ -1,5 +1,6 @@
 package test.model.drugs;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,6 @@ class DrugRepositoryTest {
     @BeforeEach
     void setup(){
         _repo = DrugRepository.getInstance();
-        _repo.clear();
         _paracetamol = new Drug.Builder("Paracetamol")
                 .setDescription("Painkiller")
                 .build()
@@ -41,6 +41,11 @@ class DrugRepositoryTest {
                 .addSideEffect("Hallucintions")
                 .build()
                 .include();
+    }
+
+    @AfterEach
+    void teardown(){
+        _repo.clear();
     }
 
     @Test

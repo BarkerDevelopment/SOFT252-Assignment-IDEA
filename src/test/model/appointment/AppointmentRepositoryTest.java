@@ -1,8 +1,6 @@
 package test.model.appointment;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import soft252.model.appointment.Appointment;
 import soft252.model.appointment.AppointmentRepository;
 import soft252.model.appointment.I_Appointment;
@@ -19,7 +17,7 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppointmentRepositoryTest {
-    private static AppointmentRepository _repo = AppointmentRepository.getInstance();
+    private static AppointmentRepository _repo;
     private static Doctor _doctor;
     private static Patient _patient;
     private static I_Appointment _sharedAppointment;
@@ -27,8 +25,10 @@ class AppointmentRepositoryTest {
     private static I_Appointment _patientAppointment;
     private static LocalDate _shareDate;
 
-    @BeforeAll
-    static void setup(){
+    @BeforeEach
+    void setup(){
+        _repo = AppointmentRepository.getInstance();
+
         _doctor = new Doctor("1111", "Ray", "Winston");
         Doctor altDoctor = new Doctor("9231", "Doctor", "Who");
         _patient = new Patient("3252", "John"," Cena", Gender.MALE);
@@ -38,6 +38,11 @@ class AppointmentRepositoryTest {
         _shareDate = LocalDate.of(2019, 11, 23);
         _doctorAppointment = new Appointment(altPatient, _doctor, LocalDateTime.of(_shareDate, LocalTime.of(19, 30))).include();
         _patientAppointment = new Appointment(_patient, altDoctor, LocalDateTime.of(_shareDate, LocalTime.of(12, 45))).include();
+    }
+
+    @AfterEach
+    void teardown(){
+        _repo.clear();
     }
 
     @Test
