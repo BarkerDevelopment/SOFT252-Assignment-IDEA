@@ -1,15 +1,15 @@
 package soft252.exceptions;
 
 /**
- * DrugDuplicateException is a sub-class of exceptions related to the attempt of creating a new drug that already exists in the
- * repository.
+ * DuplicateException is a super-class of exceptions related to the attempt of creating an object similar or the same to
+ * one that exists already within a repository.
  */
-public class DrugDuplicateException extends DuplicateException {
+public class DuplicateException extends Exception{
     /**
      * Constructs a new exception with null as its detail message. The cause is not initialized, and may subsequently
      * be initialized by a call to Throwable.initCause(java.lang.Throwable).
      */
-    public DrugDuplicateException(){
+    public DuplicateException(){
         super();
     }
 
@@ -20,7 +20,7 @@ public class DrugDuplicateException extends DuplicateException {
      * @param message the detail message. The detail message is saved for later retrieval by the Throwable.getMessage()
      *                method.
      */
-    public DrugDuplicateException(String message){
+    public DuplicateException(String message){
         super(message);
     }
 
@@ -33,7 +33,7 @@ public class DrugDuplicateException extends DuplicateException {
      * @param cause the cause (which is saved for later retrieval by the Throwable.getCause() method). (A null value is
      *              permitted, and indicates that the cause is nonexistent or unknown.)
      */
-    public DrugDuplicateException(String message, Throwable cause){
+    public DuplicateException(String message, Throwable cause){
         super(message, cause);
     }
 
@@ -45,7 +45,7 @@ public class DrugDuplicateException extends DuplicateException {
      * @param cause  the cause (which is saved for later retrieval by the Throwable.getCause() method).
      *               (A null value is permitted, and indicates that the cause is nonexistent or unknown.)
      */
-    public DrugDuplicateException(Throwable cause){
+    public DuplicateException(Throwable cause){
         super(cause);
     }
 
@@ -58,7 +58,7 @@ public class DrugDuplicateException extends DuplicateException {
      * @param enableSuppression whether or not suppression is enabled or disabled
      * @param writableStackTrace whether or not the stack trace should be writable
      */
-    public DrugDuplicateException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace){
+    public DuplicateException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace){
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

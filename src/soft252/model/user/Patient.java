@@ -5,6 +5,8 @@ import soft252.model.appointment.I_Appointment;
 import soft252.model.appointment.I_AppointmentParticipant;
 import soft252.model.drugs.I_Prescription;
 import soft252.model.request.AccountCreationRequest;
+import soft252.model.request.AppointmentRequest;
+import soft252.model.request.I_Requester;
 import soft252.model.user.feedback.I_Feedback;
 import soft252.model.user.feedback.I_FeedbackRecipient;
 import soft252.model.user.feedback.I_FeedbackSender;
@@ -20,7 +22,7 @@ import java.util.ArrayList;
  * A User subclass for the system's patients.
  */
 public class Patient extends User
-    implements I_AppointmentParticipant, I_FeedbackSender {
+    implements I_AppointmentParticipant, I_FeedbackSender, I_Requester< AppointmentRequest >{
 
     private static Role ROLE = Role.PATIENT;
     private final LocalDate _dob;
@@ -28,8 +30,9 @@ public class Patient extends User
     private ArrayList< I_Prescription > _prescriptions;
 
     /**
+     * Creates a patient object based of a request.
      *
-     * @param request
+     * @param request the request to create an account.
      */
     public Patient(AccountCreationRequest request){
         super(ROLE, request.getName(), request.getSurname(), request.getAddress(), request.getPassword());
@@ -134,6 +137,23 @@ public class Patient extends User
      */
     public void removePrescription(I_Prescription prescriptions){
         _prescriptions.remove(prescriptions);
+    }
+
+    /**
+     *
+     * @param doctor
+     * @param dateTime
+     */
+    public void createAppointment(Doctor doctor, LocalDateTime dateTime){
+        new AppointmentRequest(this, doctor, dateTime);
+    }
+
+    /**
+     *
+     * @param appointment
+     */
+    public void cancelAppointment(I_Appointment appointment){
+        AppointmentRepository.getInstance().remove(appointment);
     }
 
     /**

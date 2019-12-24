@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * A class that encapsulates a request for a new drug to be added to the system.
  */
-public class NewDrugRequest extends Request
+public class DrugRequest extends Request
     implements I_Treatment {
 
     private final Doctor _doctor;
@@ -27,7 +27,7 @@ public class NewDrugRequest extends Request
      * @param requester the doctor that requested the drug.
      * @param name the name of the drug.
      */
-    public NewDrugRequest(Doctor requester, String name) throws DrugDuplicateException {
+    public DrugRequest(Doctor requester, String name) throws DrugDuplicateException {
         super(RequestType.NEW_DRUG);
 
         if(DrugRepository.getInstance().contains(name)) throw new DrugDuplicateException();
@@ -47,7 +47,7 @@ public class NewDrugRequest extends Request
      * @param name the name of the drug.
      * @param qty the quantity required.
      */
-    public NewDrugRequest(Doctor requester, String name, int qty) throws DrugDuplicateException {
+    public DrugRequest(Doctor requester, String name, int qty) throws DrugDuplicateException {
         super(RequestType.NEW_DRUG);
 
         if(DrugRepository.getInstance().contains(name)) throw new DrugDuplicateException();

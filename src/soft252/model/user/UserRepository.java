@@ -1,6 +1,8 @@
 package soft252.model.user;
 
 import soft252.model.I_Repository;
+import soft252.model.request.AccountTerminationRequest;
+import soft252.model.request.I_Requester;
 import soft252.model.user.info.Role;
 
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import java.util.EnumMap;
  * A repository of all the users in the system.
  */
 public class UserRepository
-        implements I_Repository<User> {
+        implements I_Repository<User>, I_Requester< AccountTerminationRequest > {
 
     private static UserRepository _instance;
     private final EnumMap<Role, ArrayList<User>> _users;
@@ -89,7 +91,7 @@ public class UserRepository
      */
     @Override
     public void remove(User item) {
-        if(contains(item)) _users.get(item.getId().getRole()).remove(item);
+        new AccountTerminationRequest(item);
     }
 
     /**

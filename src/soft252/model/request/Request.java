@@ -41,7 +41,7 @@ public abstract class Request
     /**
      * Denies the request and thus deletes it.
      */
-    public final void deny(){
+    public final void deny() throws Exception{
         denyAction();
         destroy();
     }

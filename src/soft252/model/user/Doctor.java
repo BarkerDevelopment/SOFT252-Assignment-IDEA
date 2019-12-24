@@ -3,11 +3,12 @@ package soft252.model.user;
 import soft252.model.appointment.AppointmentRepository;
 import soft252.model.appointment.I_Appointment;
 import soft252.model.appointment.I_AppointmentParticipant;
+import soft252.model.request.I_Requester;
+import soft252.model.request.DrugRequest;
 import soft252.model.user.feedback.I_Feedback;
 import soft252.model.user.feedback.I_FeedbackRecipient;
 import soft252.model.user.info.Address;
 import soft252.model.user.info.Role;
-import soft252.model.user.messaging.I_Message;
 import soft252.model.user.messaging.I_MessageRecipient;
 import soft252.model.user.messaging.I_MessageSender;
 import soft252.model.user.messaging.Message;
@@ -19,10 +20,9 @@ import java.util.ArrayList;
  * A User subclass for the system's doctor.
  */
 public class Doctor extends User
-    implements I_FeedbackRecipient, I_AppointmentParticipant, I_MessageSender {
+    implements I_FeedbackRecipient, I_AppointmentParticipant, I_MessageSender, I_Requester< DrugRequest > {
 
     public static Role ROLE = Role.DOCTOR;
-
     private ArrayList<I_Feedback> _feedback;
 
     /**

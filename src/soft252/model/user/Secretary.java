@@ -1,8 +1,9 @@
 package soft252.model.user;
 
+import soft252.model.request.I_RequestAdjudicator;
+import soft252.model.request.Request;
 import soft252.model.user.info.Address;
 import soft252.model.user.info.Role;
-import soft252.model.user.messaging.I_Message;
 import soft252.model.user.messaging.I_MessageRecipient;
 import soft252.model.user.messaging.I_MessageSender;
 import soft252.model.user.messaging.Message;
@@ -11,7 +12,7 @@ import soft252.model.user.messaging.Message;
  * A User subclass for the system's secretaries.
  */
 public class Secretary extends User
-    implements I_MessageSender {
+    implements I_RequestAdjudicator, I_MessageSender {
 
     public static Role ROLE = Role.SECRETARY;
 
@@ -52,6 +53,35 @@ public class Secretary extends User
         super(ROLE, idNumber, name, surname);
     }
 
+    /**
+     * Approve the passed request.
+     *
+     * @param request the target request.
+     */
+    @Override
+    public boolean approveRequest(Request request) {
+        try{
+            request.approve();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Defines the passed request.
+     *
+     * @param request the target request.
+     */
+    @Override
+    public boolean declineRequest(Request request) {
+        try{
+            request.deny();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     /**
      * Sends a message to another user.

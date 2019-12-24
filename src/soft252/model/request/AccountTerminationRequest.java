@@ -1,6 +1,6 @@
 package soft252.model.request;
 
-import soft252.model.user.Patient;
+import soft252.model.user.User;
 import soft252.model.user.UserRepository;
 
 /**
@@ -8,7 +8,7 @@ import soft252.model.user.UserRepository;
  */
 public class AccountTerminationRequest extends Request{
 
-    private final Patient _requester;
+    private final User _requester;
 
     /**
      * Default constructor.
@@ -16,7 +16,7 @@ public class AccountTerminationRequest extends Request{
      *
      * @param requester the Patient that requested the account termination.
      */
-    public AccountTerminationRequest(Patient requester) {
+    public AccountTerminationRequest(User requester) {
         super(RequestType.ACCOUNT_TERMINATION);
 
         _requester = requester;
@@ -27,7 +27,7 @@ public class AccountTerminationRequest extends Request{
     /**
      * @return the _requester variable.
      */
-    public Patient getRequester() {
+    public User getRequester() {
         return _requester;
     }
 

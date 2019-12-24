@@ -3,8 +3,8 @@ package soft252.model.appointment;
 import soft252.model.I_Completable;
 import soft252.model.drugs.Drug;
 import soft252.model.drugs.I_Prescription;
+import soft252.model.request.I_Requester;
 import soft252.model.request.PrescriptionRequest;
-import soft252.model.request.RequestRepository;
 import soft252.model.user.Doctor;
 import soft252.model.user.Patient;
 
@@ -16,7 +16,7 @@ import java.util.Arrays;
  * A class that encapsulates patient's appointments.
  */
 public class Appointment
-        implements I_Appointment, I_Completable {
+        implements I_Appointment, I_Completable, I_Requester< PrescriptionRequest > {
 
     private final Patient _patient;
     private Doctor _doctor;
@@ -153,7 +153,7 @@ public class Appointment
 
         _prescriptions.forEach( prescription -> {
             if(prescription.getTreatment() instanceof Drug){
-                RequestRepository.getInstance().add( new PrescriptionRequest(_patient, prescription) );
+                new PrescriptionRequest(_patient, prescription);
 
             }else{
                 _patient.addPrescription(prescription); // If a prescription is not of a drug, just assign it to the patient.

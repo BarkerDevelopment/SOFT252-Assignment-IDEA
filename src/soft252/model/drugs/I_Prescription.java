@@ -1,7 +1,6 @@
 package soft252.model.drugs;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * Defines the functions for a Treatment object.
