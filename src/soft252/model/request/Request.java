@@ -14,8 +14,8 @@ public abstract class Request
     protected RequestType _type;
 
     /**
-     *
-     * @param type
+     * Default constructor.
+     * @param type the type of the request.
      */
     public Request(RequestType type){
         _type = type;
@@ -34,8 +34,7 @@ public abstract class Request
     }
 
     /**
-     *
-     * @return
+     * @return the type of the request.
      */
     public RequestType getType(){
         return _type;
