@@ -54,7 +54,7 @@ public class UserRepository
      * @param role the queried role.
      * @return the users of the specified role.
      */
-    public ArrayList<User> getAll(Role role) {
+    public ArrayList<User> get(Role role) {
         return _users.get(role);
     }
 
@@ -67,7 +67,7 @@ public class UserRepository
     public User get(String id){
         Role userRole = Role.fromString(id.charAt(0));
 
-        for(User user : getAll(userRole)) if(user.getId().toString().equals(id)) return user;
+        for(User user : get(userRole)) if(user.getId().toString().equals(id)) return user;
 
         return null; // No User has the ID, therefore return NULL.
     }

@@ -62,7 +62,7 @@ class IDTest {
 
             // Checks new ID against all existing IDs.
             for(Role r: Role.values()){
-                for (User user : _instance.getAll(r)) {
+                for (User user : _instance.get(r)) {
                     ID expResult = user.getId();
                     System.out.println(expResult);
 

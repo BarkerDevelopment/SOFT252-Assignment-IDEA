@@ -80,19 +80,19 @@ class UserRepositoryTest {
     @DisplayName("getUsers")
     public void testGetAll_Role() {
         ArrayList<User> expResult = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(_users, 0, 3)));
-        ArrayList<User> result =  _repo.getAll(Role.PATIENT);
+        ArrayList<User> result =  _repo.get(Role.PATIENT);
         assertEquals(expResult, result);
 
         expResult = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(_users, 3, 4)));
-        result =  _repo.getAll(Role.ADMIN);
+        result =  _repo.get(Role.ADMIN);
         assertEquals(expResult, result);
 
         expResult = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(_users, 4, 5)));
-        result =  _repo.getAll(Role.SECRETARY);
+        result =  _repo.get(Role.SECRETARY);
         assertEquals(expResult, result);
 
         expResult = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(_users, 5, 6)));
-        result =  _repo.getAll(Role.DOCTOR);
+        result =  _repo.get(Role.DOCTOR);
         assertEquals(expResult, result);
     }
 
@@ -105,7 +105,7 @@ class UserRepositoryTest {
         Doctor item = new Doctor("7777", "John", "Cena");
         _repo.add(item);
 
-        assertTrue(_repo.getAll(Role.DOCTOR).contains(item));
+        assertTrue(_repo.get(Role.DOCTOR).contains(item));
 
         _repo.remove(item);
     }
@@ -119,7 +119,7 @@ class UserRepositoryTest {
         _repo.remove(_users[0]);
 
         ArrayList<User> expResult = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(_users, 1, 3)));
-        ArrayList<User> result =  _repo.getAll(Role.PATIENT);
+        ArrayList<User> result =  _repo.get(Role.PATIENT);
         assertEquals(expResult, result);
     }
 
