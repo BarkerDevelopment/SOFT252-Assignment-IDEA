@@ -1,40 +1,101 @@
 package soft252.model.drugs;
 
+import soft252.I_Builder;
+
 import java.util.ArrayList;
 
 /**
- * An object that encapsulates a drug treatment.
+ * A class that encapsulates a drug treatment.
  */
 public class Drug
         implements I_Treatment{
+    /**
+     * Drug Builder.
+     */
+    public static class Builder implements I_Builder<Drug> {
+        private final String name;
+        private String description;
+        private ArrayList<String> sideEffects;
+        private int stock;
+
+        /**
+         * Builder constructor.
+         * @param name the drug name.
+         */
+        public Builder(String name){
+            this.name = name;
+            sideEffects = new ArrayList<>();
+            stock = 0;
+        }
+
+        /**
+         * Add a drug description.
+         *
+         * @param description the drug description.
+         */
+        public Builder setDescription(String description){
+             this.description = description;
+             return this;
+        }
+
+        /**
+         * Add side effects.
+         *
+         * @param sideEffect a side effect of the drug.
+         */
+        public Builder setSideEffects(ArrayList<String> sideEffect){
+            sideEffects = sideEffect;
+            return this;
+        }
+
+        /**
+         * Add a side effect.
+         * NOTE: this can be stacked.
+         *
+         * @param sideEffect a side effect of the drug.
+         */
+        public Builder addSideEffect(String sideEffect){
+            sideEffects.add(sideEffect);
+            return this;
+        }
+
+        /**
+         * Add the stock of the drug.
+         *
+         * @param stock the stock of the drug.
+         */
+        public Builder setStock(int stock){
+            this.stock = stock;
+            return this;
+        }
+
+        /**
+         * Builds the final object and returns it.
+         *
+         * @return the object.
+         */
+        @Override
+        public Drug build() {
+            return new Drug(this);
+        }
+    }
+
     private String _name;
     private String _description;
     private ArrayList<String> _sideEffects;
 
     /**
-     * Creates a drug object with an empty list of side effects. This could be used for an experimental drug with unknown
-     * side effects.
+     * Constructor used by Builder.
+     * Additionally, this constructor adds the resultant object to its corresponding repository: RequestRepository.
      *
-     * @param name the name of the drug.
-     * @param description the description of the drug.
+     * @param builder the drug builder object.
      */
-    public Drug(String name, String description) {
-        _name = name;
-        _description = description;
-        _sideEffects = new ArrayList<>();
-    }
+    private Drug(Builder builder) {
+        _name = builder.name;
+        _description = builder.description;
+        _sideEffects = builder.sideEffects;
 
-    /**
-     * Creates a drug object.
-     *
-     * @param name the name of the drug.
-     * @param description the description of the drug.
-     * @param sideEffects the list of side effects.
-     */
-    public Drug(String name, String description, ArrayList<String> sideEffects) {
-        _name = name;
-        _description = description;
-        _sideEffects = sideEffects;
+        DrugRepository.getInstance().add(this, builder.stock);
     }
 
     /**

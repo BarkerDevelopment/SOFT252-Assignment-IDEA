@@ -29,7 +29,7 @@ class AppointmentTest {
         _patient = new Patient("9020", "John", "Cena", Gender.MALE);
         Doctor doctor = new Doctor("1000", "Ray", "Winston");
 
-        Drug drug = new Drug("Paracetamol", "Painkiller");
+        Drug drug = new Drug.Builder("Paracetamol").setDescription("Painkiller").build();
         DrugRepository.getInstance().add(drug, 50);
         _drugPrescription = new Prescription(drug, 10, 5);
 

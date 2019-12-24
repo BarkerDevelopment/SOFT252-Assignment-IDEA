@@ -117,16 +117,13 @@ public class NewDrugRequest extends Request
      */
     @Override
     protected void approveAction() {
-        DrugRepository repository = DrugRepository.getInstance();
+        Drug drug = new Drug.Builder(_name)
+                .setDescription(_description)
+                .setSideEffects(_sideEffects)
+                .setStock(_startingQty)
+                .build();
 
-        if(_startingQty == 0){
-            repository.add(new Drug(_name, _description, _sideEffects));
-
-        }else{
-            repository.add(new Drug(_name, _description, _sideEffects), _startingQty);
-        }
-
-        sendMessage(_doctor, String.format("Your drug request for %s has been approved.", _name));
+        sendMessage(_doctor, String.format("Your drug request for %s has been approved.", drug.getName()));
     }
 
     /**

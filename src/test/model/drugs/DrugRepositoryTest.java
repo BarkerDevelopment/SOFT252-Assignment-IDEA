@@ -23,12 +23,21 @@ class DrugRepositoryTest {
     void setup(){
         _repo = DrugRepository.getInstance();
         _repo.clear();
-        _paracetamol = new Drug("Paracetamol", "Painkiller");
-        _ibuprofen = new Drug("Ibuprofen", "Painkiller", new ArrayList<>(List.of("Stomach Ulcers")));
-        _morphine = new Drug("Morphine", "Painkiller in liquid.");
+        _paracetamol = new Drug.Builder("Paracetamol")
+                .setDescription("Painkiller")
+                .setStock(5)
+                .build();
 
-        _repo.add(_paracetamol, 5);
-        _repo.add(_ibuprofen, 3);
+        _ibuprofen = new Drug.Builder("Ibuprofen")
+                .setDescription("Painkiller")
+                .addSideEffect("Stomach Ulcers")
+                .setStock(3)
+                .build();
+
+        _morphine = new Drug.Builder("Morphine")
+                .setDescription("Painkiller in liquid.")
+                .addSideEffect("Hallucintions")
+                .build();
     }
 
     @Test
@@ -70,14 +79,11 @@ class DrugRepositoryTest {
     @Test
     @DisplayName("add with stock")
     void testAdd() {
-        int stock = 9;
-        _repo.add(_morphine, stock);
-
-        boolean result = _repo.get().contains(_morphine);
+        boolean result = _repo.get().contains(_paracetamol);
         assertTrue(result);
 
-        int expResult2 = stock;
-        int result2 = _repo.getStock(_morphine);
+        int expResult2 = 5;
+        int result2 = _repo.getStock(_paracetamol);
         assertEquals(result2, expResult2);
     }
 
@@ -101,6 +107,7 @@ class DrugRepositoryTest {
         HashMap<Drug, Integer>  expResult = new HashMap<>();
         expResult.put( _paracetamol, 5);
         expResult.put( _ibuprofen, 3);
+        expResult.put( _morphine, 0);
 
         HashMap<Drug, Integer> result = _repo.getStock();
         assertEquals(expResult, result);
@@ -119,7 +126,6 @@ class DrugRepositoryTest {
     @DisplayName("updateStock")
     void updateStock() {
         assertThrows(StockLevelException.class, () -> _repo.updateStock(_ibuprofen, -4));
-        assertThrows(NullPointerException.class, () -> _repo.updateStock(_morphine, 4));
         assertDoesNotThrow(() -> _repo.updateStock(_ibuprofen, 3));
 
         int expResult = 6;

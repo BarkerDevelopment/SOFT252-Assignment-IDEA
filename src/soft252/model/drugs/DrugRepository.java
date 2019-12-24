@@ -210,7 +210,7 @@ public class DrugRepository
      * @param drug the target drug.
      * @return the number of drug in stock.
      */
-    public int getStock(Drug drug) throws NullPointerException{
+    public int getStock(Drug drug){
         return get(drug).getStock();
     }
 
@@ -221,7 +221,7 @@ public class DrugRepository
      * @param stockChange the change in stock requested.
      * @throws StockLevelException if the change in stock results in a negative stock value.
      */
-    public void updateStock(Drug drug, int stockChange) throws StockLevelException, NullPointerException{
+    public void updateStock(Drug drug, int stockChange) throws StockLevelException{
         DrugStockListing dl = get(drug);
 
         int newStockLevel = dl.getStock() + stockChange;
