@@ -17,6 +17,8 @@ public class AccountTerminationRequest extends Request{
      * @param requester the Patient that requested the account termination.
      */
     public AccountTerminationRequest(Patient requester) {
+        super(RequestType.ACCOUNT_TERMINATION);
+
         _requester = requester;
 
         RequestRepository.getInstance().add(this);

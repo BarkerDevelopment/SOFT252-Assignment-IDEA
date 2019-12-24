@@ -10,6 +10,26 @@ import soft252.model.user.messaging.Message;
  */
 public abstract class Request
     implements I_MessageSender{
+
+    protected RequestType _type;
+
+    /**
+     *
+     * @param type
+     */
+    public Request(RequestType type){
+        _type = type;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public RequestType getType(){
+        return _type;
+    }
+
+
     /**
      * Approves the request.
      */

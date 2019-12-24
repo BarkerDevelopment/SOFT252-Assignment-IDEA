@@ -11,7 +11,6 @@ import java.time.LocalDate;
  * A class that encapsulates a request to create a new Patient object.
  */
 public class AccountCreationRequest extends Request {
-
     private final String _name;
     private final String _surname;
     private final Address _address;
@@ -31,6 +30,8 @@ public class AccountCreationRequest extends Request {
      * @param gender the Patient's gender.
      */
     public AccountCreationRequest(String name, String surname, Address address, String password, LocalDate dob, Gender gender) {
+        super(RequestType.ACCOUNT_CREATION);
+
         _name = name;
         _surname = surname;
         _address = address;

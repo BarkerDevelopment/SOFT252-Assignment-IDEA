@@ -3,6 +3,7 @@ package soft252.model.request;
 import soft252.model.I_Repository;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 
 /**
  * A repository of all the requests in the system.
@@ -10,13 +11,15 @@ import java.util.ArrayList;
 public class RequestRepository
         implements I_Repository< Request > {
     private static RequestRepository _instance;
-    private final ArrayList< Request > _requests;
+    private final EnumMap< RequestType, ArrayList< Request > > _requests;
 
     /**
      * Singleton constructor.
      */
     private RequestRepository(){
-        _requests = new ArrayList<>();
+        _requests = new EnumMap<>(RequestType.class);
+
+        for(RequestType r: RequestType.values()) _requests.put(r, new ArrayList<>());
     }
 
     /**
@@ -35,7 +38,21 @@ public class RequestRepository
      */
     @Override
     public ArrayList< Request > get() {
-        return _requests;
+        ArrayList< Request > allRequests = new ArrayList<>();
+
+        for(RequestType r : RequestType.values()) allRequests.addAll(_requests.get(r));
+
+        return allRequests;
+    }
+
+    /**
+     * Gets all requests of the passed type.
+     *
+     * @param type the queried type.
+     * @return the requests of the specified type.
+     */
+    public ArrayList<Request> get(RequestType type) {
+        return _requests.get(type);
     }
 
     /**
@@ -45,7 +62,7 @@ public class RequestRepository
      */
     @Override
     public void add(Request item) {
-        _requests.add(item);
+        _requests.get(item.getType()).add(item);
     }
 
     /**
@@ -55,7 +72,7 @@ public class RequestRepository
      */
     @Override
     public void remove(Request item) {
-        _requests.remove(item);
+        if(contains(item)) _requests.get(item.getType()).remove(item);
     }
 
     /**
@@ -66,7 +83,7 @@ public class RequestRepository
      */
     @Override
     public boolean contains(Request item) {
-        return _requests.contains(item);
+        return _requests.get(item.getType()).contains(item);
     }
 
     /**

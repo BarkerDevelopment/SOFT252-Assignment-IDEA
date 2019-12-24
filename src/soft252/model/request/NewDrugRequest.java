@@ -28,6 +28,8 @@ public class NewDrugRequest extends Request
      * @param name the name of the drug.
      */
     public NewDrugRequest(Doctor requester, String name) throws DrugDuplicateException {
+        super(RequestType.NEW_DRUG);
+
         if(DrugRepository.getInstance().contains(name)) throw new DrugDuplicateException();
 
         _doctor = requester;
@@ -46,6 +48,8 @@ public class NewDrugRequest extends Request
      * @param qty the quantity required.
      */
     public NewDrugRequest(Doctor requester, String name, int qty) throws DrugDuplicateException {
+        super(RequestType.NEW_DRUG);
+
         if(DrugRepository.getInstance().contains(name)) throw new DrugDuplicateException();
         _doctor = requester;
         _name = name;

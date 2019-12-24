@@ -28,7 +28,7 @@ public class PrescriptionRequest extends Request
      * @param prescription the prescription the patient needs.
      */
     public PrescriptionRequest(Patient patient, I_Prescription prescription) {
-        super();
+        super(RequestType.PRESCRIPTION);
         _patient = patient;
         _prescription = prescription;
         _drug = (Drug) _prescription.getTreatment();

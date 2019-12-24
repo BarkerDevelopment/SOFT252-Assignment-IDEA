@@ -25,6 +25,8 @@ public class AppointmentRequest extends Request{
      * @param dateTime the requested dateTime for the appointment.
      */
     public AppointmentRequest(Patient requester, Doctor doctor, LocalDateTime dateTime) {
+        super(RequestType.APPOINTMENT);
+
         _patient = requester;
         _doctor = doctor;
         _dateTime = dateTime;
