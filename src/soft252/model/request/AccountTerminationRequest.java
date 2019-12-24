@@ -20,8 +20,6 @@ public class AccountTerminationRequest extends Request{
         super(RequestType.ACCOUNT_TERMINATION);
 
         _requester = requester;
-
-        RequestRepository.getInstance().add(this);
     }
 
     /**

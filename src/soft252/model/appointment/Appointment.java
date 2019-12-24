@@ -39,8 +39,17 @@ public class Appointment
         _dateTime = dateTime;
         _prescriptions = new ArrayList<>();
         _isCompleted = false;
+    }
 
+    /**
+     * Stores the object in it's respective repository.
+     *
+     * @return the object that has been added to the repository.
+     */
+    @Override
+    public I_Appointment include() {
         AppointmentRepository.getInstance().add(this);
+        return this;
     }
 
     /**
@@ -153,7 +162,7 @@ public class Appointment
 
         _prescriptions.forEach( prescription -> {
             if(prescription.getTreatment() instanceof Drug){
-                new PrescriptionRequest(_patient, prescription);
+                new PrescriptionRequest(_patient, prescription).include();
 
             }else{
                 _patient.addPrescription(prescription); // If a prescription is not of a drug, just assign it to the patient.

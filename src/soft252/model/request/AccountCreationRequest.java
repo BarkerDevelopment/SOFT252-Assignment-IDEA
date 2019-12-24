@@ -38,8 +38,6 @@ public class AccountCreationRequest extends Request {
         _password = password;
         _dob = dob;
         _gender = gender;
-
-        RequestRepository.getInstance().add(this);
     }
 
     /**

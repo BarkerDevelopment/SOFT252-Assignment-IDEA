@@ -34,8 +34,6 @@ public class AppointmentRequest extends Request{
         _patient = requester;
         _doctor = doctor;
         _dateTime = dateTime;
-
-        RequestRepository.getInstance().add(this);
     }
 
     /**

@@ -195,6 +195,15 @@ public class DrugRepository
     }
 
     /**
+     * Sets the stock of a drug.
+     * @param drug the target drug.
+     * @param stock the stock level.
+     */
+    public void setStock(Drug drug, int stock){
+        get(drug).setStock(stock);
+    }
+
+    /**
      * @return the list of all items in the repo.
      */
     public HashMap<Drug, Integer> getStock() {

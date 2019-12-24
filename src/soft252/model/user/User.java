@@ -1,5 +1,6 @@
 package soft252.model.user;
 
+import soft252.model.I_RepositoryItem;
 import soft252.model.user.info.Address;
 import soft252.model.user.info.ID;
 import soft252.model.user.info.Role;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  * Super class for the system users.
  */
 public class User
-    implements I_MessageRecipient {
+    implements I_MessageRecipient, I_RepositoryItem< User > {
 
     private ID _id;
     private String _name;
@@ -38,8 +39,6 @@ public class User
         _address = address;
         _password = password;
         _messages = new ArrayList<>();
-
-        UserRepository.getInstance().add(this);
     }
 
     /**
@@ -78,6 +77,17 @@ public class User
         _address = new Address();
         _password = "password";
         _messages = new ArrayList<>();
+    }
+
+    /**
+     * Stores the object in it's respective repository.
+     *
+     * @return the object that has been added to the repository.
+     */
+    @Override
+    public User include() {
+        UserRepository.getInstance().add(this);
+        return this;
     }
 
     /**

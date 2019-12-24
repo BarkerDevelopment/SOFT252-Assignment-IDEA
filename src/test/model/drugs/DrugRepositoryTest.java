@@ -25,19 +25,22 @@ class DrugRepositoryTest {
         _repo.clear();
         _paracetamol = new Drug.Builder("Paracetamol")
                 .setDescription("Painkiller")
-                .setStock(5)
-                .build();
+                .build()
+                .include();
+        _paracetamol.setStock(5);
 
         _ibuprofen = new Drug.Builder("Ibuprofen")
                 .setDescription("Painkiller")
                 .addSideEffect("Stomach Ulcers")
-                .setStock(3)
-                .build();
+                .build()
+                .include();
+        _ibuprofen.setStock(3);
 
         _morphine = new Drug.Builder("Morphine")
                 .setDescription("Painkiller in liquid.")
                 .addSideEffect("Hallucintions")
-                .build();
+                .build()
+                .include();
     }
 
     @Test

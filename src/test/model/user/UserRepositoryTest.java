@@ -3,6 +3,10 @@ package test.model.user;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import soft252.model.request.AccountTerminationRequest;
+import soft252.model.request.Request;
+import soft252.model.request.RequestRepository;
+import soft252.model.request.RequestType;
 import soft252.model.user.*;
 import soft252.model.user.info.Gender;
 import soft252.model.user.info.Role;
@@ -14,47 +18,47 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserRepositoryTest {
     private static UserRepository _repo;
-    private static User[] _users = new User[]{
-            new Patient(
-                    "1111",
-                    "Lucas",
-                    "McCarron",
-                    Gender.MALE),
-
-            new Patient(
-                    "2222",
-                    "Lee",
-                    "Smith",
-                    Gender.MALE),
-
-            new Patient(
-                    "3333",
-                    "Holly",
-                    "Barker",
-                    Gender.FEMALE),
-
-            new Admin(
-                    "4444",
-                    "Max",
-                    "Barker"),
-
-            new Secretary(
-                    "5555",
-                    "Harry",
-                    "Stradling"),
-
-            new Doctor(
-                    "6666",
-                    "Sophie",
-                    "Brockbank")
-    };
+    private static User[] _users;
 
     @BeforeEach
-    public static void setUpClass() {
+    public void setUpClass() {
         _repo = UserRepository.getInstance();
 
         _repo.clear();
-        for(User u: _users) _repo.add(u);
+        _users = new User[]{
+                new Patient(
+                        "1111",
+                        "Lucas",
+                        "McCarron",
+                        Gender.MALE).include(),
+
+                new Patient(
+                        "2222",
+                        "Lee",
+                        "Smith",
+                        Gender.MALE).include(),
+
+                new Patient(
+                        "3333",
+                        "Holly",
+                        "Barker",
+                        Gender.FEMALE).include(),
+
+                new Admin(
+                        "4444",
+                        "Max",
+                        "Barker").include(),
+
+                new Secretary(
+                        "5555",
+                        "Harry",
+                        "Stradling").include(),
+
+                new Doctor(
+                        "6666",
+                        "Sophie",
+                        "Brockbank").include()
+        };
     }
 
     /**
@@ -118,9 +122,16 @@ class UserRepositoryTest {
     public void testRemove() {
         _repo.remove(_users[0]);
 
-        ArrayList<User> expResult = new ArrayList<>(Arrays.asList(Arrays.copyOfRange(_users, 1, 3)));
-        ArrayList<User> result =  _repo.get(Role.PATIENT);
-        assertEquals(expResult, result);
+        assertTrue(containsTerminationRequest(_users[0]));
+    }
+
+    private boolean containsTerminationRequest(User user){
+        ArrayList< Request > requests = RequestRepository.getInstance().get(RequestType.ACCOUNT_TERMINATION);
+
+        for (Request request : requests)
+            if(((AccountTerminationRequest) request).getRequester().equals(user)) return true;
+
+        return false;
     }
 
     /**

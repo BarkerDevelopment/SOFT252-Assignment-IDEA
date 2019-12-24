@@ -15,7 +15,7 @@ public class UserRepository
         implements I_Repository<User>, I_Requester< AccountTerminationRequest > {
 
     private static UserRepository _instance;
-    private final EnumMap<Role, ArrayList<User>> _users;
+    private EnumMap<Role, ArrayList<User>> _users;
 
     /**
      * Singleton constructor.
@@ -23,7 +23,7 @@ public class UserRepository
     private UserRepository(){
         _users = new EnumMap<>(Role.class);
 
-        for(Role r: Role.values()) _users.put(r, new ArrayList<>());
+        clear();
     }
 
     /**
@@ -91,7 +91,7 @@ public class UserRepository
      */
     @Override
     public void remove(User item) {
-        new AccountTerminationRequest(item);
+        new AccountTerminationRequest(item).include();
     }
 
     /**
@@ -120,6 +120,6 @@ public class UserRepository
      */
     @Override
     public void clear() {
-        _users.clear();
+        for(Role r: Role.values()) _users.put(r, new ArrayList<>());
     }
 }

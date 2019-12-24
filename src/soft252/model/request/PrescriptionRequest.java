@@ -32,8 +32,19 @@ public class PrescriptionRequest extends Request
         _patient = patient;
         _prescription = prescription;
         _drug = (Drug) _prescription.getTreatment();
+    }
 
+    /**
+     * Stores the object in it's respective repository.
+     *
+     * @return the object that has been added to the repository.
+     */
+    @Override
+    public Request include(){
         DrugRepository.getInstance().subscribe(this);
+        RequestRepository.getInstance().add(this);
+
+        return this;
     }
 
     /**

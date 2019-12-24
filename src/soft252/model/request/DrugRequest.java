@@ -35,8 +35,6 @@ public class DrugRequest extends Request
         _doctor = requester;
         _name = name;
         _sideEffects = new ArrayList<>();
-
-        RequestRepository.getInstance().add(this);
     }
 
     /**

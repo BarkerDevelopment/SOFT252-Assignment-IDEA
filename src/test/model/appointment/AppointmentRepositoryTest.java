@@ -34,14 +34,10 @@ class AppointmentRepositoryTest {
         _patient = new Patient("3252", "John"," Cena", Gender.MALE);
         Patient altPatient = new Patient("2623", "Gemma", "Stone", Gender.FEMALE);
 
-        _sharedAppointment = new Appointment(_patient, _doctor, LocalDateTime.now());
+        _sharedAppointment = new Appointment(_patient, _doctor, LocalDateTime.now()).include();
         _shareDate = LocalDate.of(2019, 11, 23);
-        _doctorAppointment = new Appointment(altPatient, _doctor, LocalDateTime.of(_shareDate, LocalTime.of(19, 30)));
-        _patientAppointment = new Appointment(_patient, altDoctor, LocalDateTime.of(_shareDate, LocalTime.of(12, 45)));
-
-        _repo.add(_sharedAppointment);
-        _repo.add(_doctorAppointment);
-        _repo.add(_patientAppointment);
+        _doctorAppointment = new Appointment(altPatient, _doctor, LocalDateTime.of(_shareDate, LocalTime.of(19, 30))).include();
+        _patientAppointment = new Appointment(_patient, altDoctor, LocalDateTime.of(_shareDate, LocalTime.of(12, 45))).include();
     }
 
     @Test

@@ -1,6 +1,6 @@
 package soft252.model.request;
 
-import soft252.model.user.messaging.I_Message;
+import soft252.model.I_RepositoryItem;
 import soft252.model.user.messaging.I_MessageRecipient;
 import soft252.model.user.messaging.I_MessageSender;
 import soft252.model.user.messaging.Message;
@@ -9,7 +9,7 @@ import soft252.model.user.messaging.Message;
  * Template pattern for a request as approval/denial end in the request being deleted from the appropriate repository.
  */
 public abstract class Request
-    implements I_MessageSender{
+    implements I_MessageSender, I_RepositoryItem< Request > {
 
     protected RequestType _type;
 
@@ -19,6 +19,18 @@ public abstract class Request
      */
     public Request(RequestType type){
         _type = type;
+    }
+
+
+    /**
+     * Stores the object in it's respective repository.
+     *
+     * @return the object that has been added to the repository.
+     */
+    @Override
+    public Request include(){
+        RequestRepository.getInstance().add(this);
+        return this;
     }
 
     /**

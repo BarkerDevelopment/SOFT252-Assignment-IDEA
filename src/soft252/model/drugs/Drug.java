@@ -1,6 +1,7 @@
 package soft252.model.drugs;
 
 import soft252.I_Builder;
+import soft252.model.I_RepositoryItem;
 
 import java.util.ArrayList;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
  * A class that encapsulates a drug treatment.
  */
 public class Drug
-        implements I_Treatment{
+        implements I_Treatment, I_RepositoryItem<Drug> {
     /**
      * Drug Builder.
      */
@@ -94,8 +95,17 @@ public class Drug
         _name = builder.name;
         _description = builder.description;
         _sideEffects = builder.sideEffects;
+    }
 
-        DrugRepository.getInstance().add(this, builder.stock);
+    /**
+     * Stores the object in it's respective repository.
+     *
+     * @return the object that has been added to the repository.
+     */
+    @Override
+    public Drug include() {
+        DrugRepository.getInstance().add(this);
+        return this;
     }
 
     /**
@@ -141,5 +151,9 @@ public class Drug
      */
     public void setSideEffects(ArrayList< String > sideEffects) {
         _sideEffects = sideEffects;
+    }
+
+    public void setStock(int stock){
+        DrugRepository.getInstance().setStock(this, stock);
     }
 }
