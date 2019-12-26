@@ -1,9 +1,6 @@
 package soft252.model.appointment;
 
 import soft252.model.I_Repository;
-import soft252.model.user.Doctor;
-import soft252.model.user.Patient;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.stream.Collectors;

@@ -1,7 +1,6 @@
 package soft252.model.request;
 
 import soft252.model.user.Patient;
-import soft252.model.user.UserRepository;
 import soft252.model.user.info.Address;
 import soft252.model.user.info.Gender;
 
@@ -87,7 +86,7 @@ public class AccountCreationRequest extends Request {
      */
     @Override
     protected void approveAction() {
-        UserRepository.getInstance().add( new Patient( this ) );
+        new Patient( this ).include();
     }
 
     /**
