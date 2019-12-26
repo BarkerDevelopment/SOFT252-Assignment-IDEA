@@ -1,6 +1,9 @@
 package soft252.models.request;
 
 import soft252.models.I_Repository;
+import soft252.services.serialization.I_SerializationHandler;
+import soft252.services.serialization.RepositoryDeserializationHandler;
+import soft252.services.serialization.RepositorySerializationHandler;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -10,16 +13,23 @@ import java.util.EnumMap;
  */
 public class RequestRepository
         implements I_Repository< Request > {
-    private static RequestRepository _instance;
+
+    private static String FILE_NAME = "requests";
+    private final I_SerializationHandler _serializationHandler;
+    private final I_SerializationHandler _deserializationHandler;
+
+    private static RequestRepository INSTANCE;
     private final EnumMap< RequestType, ArrayList< Request > > _requests;
 
     /**
      * Singleton constructor.
      */
     private RequestRepository(){
-        _requests = new EnumMap<>(RequestType.class);
+        _serializationHandler = new RepositorySerializationHandler(FILE_NAME, this);
+        _deserializationHandler = new RepositoryDeserializationHandler(FILE_NAME, this);
 
-        for(RequestType r: RequestType.values()) _requests.put(r, new ArrayList<>());
+        _requests = new EnumMap<>(RequestType.class);
+        clear();
     }
 
     /**
@@ -28,9 +38,23 @@ public class RequestRepository
      * @return the instance of the repository.
      */
     public static RequestRepository getInstance() {
-        if(_instance == null) _instance = new RequestRepository();
+        if(INSTANCE == null) INSTANCE = new RequestRepository();
 
-        return _instance;
+        return INSTANCE;
+    }
+
+    /**
+     * Wipes the contents of the repository and replaces it with the contents of the object passed. Primarily used by
+     * RepositoryDeserializationHandler.
+     *
+     * @param objects the object the RepositoryDeserializationHandler passes.
+     */
+    @Override
+    public void initialise(Object objects) {
+        clear();
+        ArrayList< Request > requests = (ArrayList< Request >) objects;
+
+        addAll(requests);
     }
 
     /**
@@ -66,6 +90,16 @@ public class RequestRepository
     }
 
     /**
+     * Adds a collection of items to the repository.
+     *
+     * @param items the new items.
+     */
+    @Override
+    public void addAll(ArrayList< Request > items) {
+
+    }
+
+    /**
      * Remove an item from the repository.
      *
      * @param item the target item.
@@ -92,5 +126,21 @@ public class RequestRepository
     @Override
     public void clear() {
         for(RequestType r: RequestType.values()) _requests.put(r, new ArrayList<>());
+    }
+
+    /**
+     * Load stored information.
+     */
+    @Override
+    public void load() {
+        _deserializationHandler.action();
+    }
+
+    /**
+     * Save stored information.
+     */
+    @Override
+    public void save() {
+        _serializationHandler.action();
     }
 }

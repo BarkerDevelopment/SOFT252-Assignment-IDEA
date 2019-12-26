@@ -1,5 +1,8 @@
 package soft252.models;
 
+import soft252.services.serialization.I_Loadable;
+import soft252.services.serialization.I_Savable;
+
 import java.util.ArrayList;
 
 /**
@@ -7,7 +10,14 @@ import java.util.ArrayList;
  *
  * @param <T> the type of object to be stored.
  */
-public interface I_Repository<T> {
+public interface I_Repository<T extends I_RepositoryItem< T >> extends I_Loadable, I_Savable {
+    /**
+     * Wipes the contents of the repository and replaces it with the contents of the object passed. Primarily used by
+     * RepositoryDeserializationHandler.
+     *
+     * @param objects the object the RepositoryDeserializationHandler passes.
+     */
+    public abstract void initialise(Object objects);
 
     /**
      * @return the list of all items in the repo.
@@ -20,6 +30,13 @@ public interface I_Repository<T> {
      * @param item the new item.
      */
     public abstract void add(T item);
+
+    /**
+     * Adds a collection of items to the repository.
+     *
+     * @param items the new items.
+     */
+    public abstract void addAll(ArrayList<T> items);
 
     /**
      * Remove an item from the repository.

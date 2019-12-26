@@ -5,6 +5,9 @@ import soft252.models.I_Observable;
 import soft252.models.I_Observer;
 import soft252.models.I_Repository;
 import soft252.models.request.PrescriptionRequest;
+import soft252.services.serialization.I_SerializationHandler;
+import soft252.services.serialization.RepositoryDeserializationHandler;
+import soft252.services.serialization.RepositorySerializationHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -89,13 +92,21 @@ public class DrugRepository
         }
     }
 
-    private static DrugRepository _instance;
+    private static String FILE_NAME = "drugs";
+    private static DrugRepository INSTANCE;
+
+    private final I_SerializationHandler _serializationHandler;
+    private final I_SerializationHandler _deserializationHandler;
+
     private ArrayList<DrugStockListing> _drugs;
 
     /**
      * Singleton constructor.
      */
     private DrugRepository() {
+        _serializationHandler = new RepositorySerializationHandler(FILE_NAME, this);
+        _deserializationHandler = new RepositoryDeserializationHandler(FILE_NAME, this);
+
         _drugs = new ArrayList<>();
     }
 
@@ -105,9 +116,23 @@ public class DrugRepository
      * @return the instance of the repository.
      */
     public static DrugRepository getInstance(){
-        if(_instance == null) _instance = new DrugRepository();
+        if(INSTANCE == null) INSTANCE = new DrugRepository();
 
-        return _instance;
+        return INSTANCE;
+    }
+
+    /**
+     * Wipes the contents of the repository and replaces it with the contents of the object passed. Primarily used by
+     * RepositoryDeserializationHandler.
+     *
+     * @param objects the object the RepositoryDeserializationHandler passes.
+     */
+    @Override
+    public void initialise(Object objects) {
+        clear();
+        ArrayList< Drug > drugs = (ArrayList< Drug >) objects;
+
+        addAll(drugs);
     }
 
     /**
@@ -142,6 +167,16 @@ public class DrugRepository
     @Override
     public void add(Drug item) {
         _drugs.add(new DrugStockListing(item, 0));
+    }
+
+    /**
+     * Adds a collection of items to the repository.
+     *
+     * @param items the new items.
+     */
+    @Override
+    public void addAll(ArrayList< Drug > items) {
+        items.forEach(i -> _drugs.add(new DrugStockListing(i, 0)));
     }
 
     /**
@@ -275,5 +310,21 @@ public class DrugRepository
         for (DrugStockListing dl : _drugs) if(dl.getDrug().equals(item)) return dl;
 
         return null;
+    }
+
+    /**
+     * Load stored information.
+     */
+    @Override
+    public void load() {
+        _deserializationHandler.action();
+    }
+
+    /**
+     * Save stored information.
+     */
+    @Override
+    public void save() {
+        _serializationHandler.action();
     }
 }

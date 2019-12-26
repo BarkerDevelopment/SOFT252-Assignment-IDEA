@@ -1,9 +1,13 @@
 package soft252.models.users;
 
 import soft252.models.I_Repository;
+import soft252.models.drugs.Drug;
 import soft252.models.request.AccountTerminationRequest;
 import soft252.models.request.I_Requester;
 import soft252.models.users.info.Role;
+import soft252.services.serialization.I_SerializationHandler;
+import soft252.services.serialization.RepositoryDeserializationHandler;
+import soft252.services.serialization.RepositorySerializationHandler;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -14,15 +18,21 @@ import java.util.EnumMap;
 public class UserRepository
         implements I_Repository<User>, I_Requester< AccountTerminationRequest > {
 
-    private static UserRepository _instance;
-    private EnumMap<Role, ArrayList<User>> _users;
+    private static String FILE_NAME = "users";
+    private final I_SerializationHandler _serializationHandler;
+    private final I_SerializationHandler _deserializationHandler;
+
+    private static UserRepository INSTANCE;
+    private final EnumMap<Role, ArrayList<User>> _users;
 
     /**
      * Singleton constructor.
      */
     private UserRepository(){
-        _users = new EnumMap<>(Role.class);
+        _serializationHandler = new RepositorySerializationHandler(FILE_NAME, this);
+        _deserializationHandler = new RepositoryDeserializationHandler(FILE_NAME, this);
 
+        _users = new EnumMap<>(Role.class);
         clear();
     }
 
@@ -32,9 +42,23 @@ public class UserRepository
      * @return the instance of the repository.
      */
     public static UserRepository getInstance() {
-        if(_instance == null) _instance = new UserRepository();
+        if(INSTANCE == null) INSTANCE = new UserRepository();
 
-        return _instance;
+        return INSTANCE;
+    }
+
+    /**
+     * Wipes the contents of the repository and replaces it with the contents of the object passed. Primarily used by
+     * RepositoryDeserializationHandler.
+     *
+     * @param objects the object the RepositoryDeserializationHandler passes.
+     */
+    @Override
+    public void initialise(Object objects) {
+        clear();
+        ArrayList< User > users = (ArrayList< User >) objects;
+
+        addAll(users);
     }
 
     /**
@@ -85,6 +109,16 @@ public class UserRepository
     }
 
     /**
+     * Adds a collection of items to the repository.
+     *
+     * @param items the new items.
+     */
+    @Override
+    public void addAll(ArrayList< User > items) {
+
+    }
+
+    /**
      * Remove an item from the repository.
      *
      * @param item the target item.
@@ -121,5 +155,21 @@ public class UserRepository
     @Override
     public void clear() {
         for(Role r: Role.values()) _users.put(r, new ArrayList<>());
+    }
+
+    /**
+     * Load stored information.
+     */
+    @Override
+    public void load() {
+        _deserializationHandler.action();
+    }
+
+    /**
+     * Save stored information.
+     */
+    @Override
+    public void save() {
+        _serializationHandler.action();
     }
 }

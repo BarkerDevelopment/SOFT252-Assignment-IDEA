@@ -1,11 +1,13 @@
 package soft252.models;
 
+import java.io.Serializable;
+
 /**
  * This interface implies that the class is stored in a repository.
  *
  * @param <T> the class of the object which inherits the interface.
  */
-public interface I_RepositoryItem<T> {
+public interface I_RepositoryItem<T> extends Serializable {
     /**
      * Stores the object in it's respective repository.
      *
