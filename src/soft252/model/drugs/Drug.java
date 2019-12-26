@@ -61,16 +61,6 @@ public class Drug
         }
 
         /**
-         * Add the stock of the drug.
-         *
-         * @param stock the stock of the drug.
-         */
-        public Builder setStock(int stock){
-            this.stock = stock;
-            return this;
-        }
-
-        /**
          * Builds the final object and returns it.
          *
          * @return the object.

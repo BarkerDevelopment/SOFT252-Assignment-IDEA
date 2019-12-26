@@ -91,6 +91,6 @@ public class RequestRepository
      */
     @Override
     public void clear() {
-        _requests.clear();
+        for(RequestType r: RequestType.values()) _requests.put(r, new ArrayList<>());
     }
 }

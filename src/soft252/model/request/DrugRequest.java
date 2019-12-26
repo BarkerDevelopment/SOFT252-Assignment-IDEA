@@ -122,8 +122,10 @@ public class DrugRequest extends Request
         Drug drug = new Drug.Builder(_name)
                 .setDescription(_description)
                 .setSideEffects(_sideEffects)
-                .setStock(_startingQty)
-                .build();
+                .build()
+                .include();
+
+        drug.setStock(_startingQty);
 
         sendMessage(_doctor, String.format("Your drug request for %s has been approved.", drug.getName()));
     }

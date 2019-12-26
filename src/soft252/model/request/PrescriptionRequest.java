@@ -62,6 +62,14 @@ public class PrescriptionRequest extends Request
     }
 
     /**
+     * Used for testing the update function.
+     * @return the updated _drugStock
+     */
+    public int getDrugStock() {
+        return _drugStock;
+    }
+
+    /**
      * The action following request approval.
      */
     @Override

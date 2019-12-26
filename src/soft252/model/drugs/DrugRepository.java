@@ -57,6 +57,7 @@ public class DrugRepository
          */
         public void setStock(int stock) {
             _stock = stock;
+            publish();
         }
 
         /**
