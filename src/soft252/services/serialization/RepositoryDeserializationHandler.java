@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 /**
- *
+ * A class that handles a Repository's deserialization.
  */
 public class RepositoryDeserializationHandler
         implements I_SerializationHandler{
@@ -14,9 +14,10 @@ public class RepositoryDeserializationHandler
     private I_Repository< ? > _repo;
 
     /**
+     * Default constructor.
      *
-     * @param filename
-     * @param repo
+     * @param filename the destination file name.
+     * @param repo the target repository.
      */
     public RepositoryDeserializationHandler(String filename, I_Repository< ? > repo) {
         _filename = filename;
@@ -24,7 +25,9 @@ public class RepositoryDeserializationHandler
     }
 
     /**
+     * Performs the SerializationHandler's action.
      *
+     * Loads all items within the repository.
      */
     @Override
     public void action() {
