@@ -51,7 +51,7 @@ public class Patient extends User
      * @param dob the Patient's date of birth.
      * @param gender the Patient's gender.
      */
-    public Patient(String name, String surname, Address address, String password, LocalDate dob, Gender gender) {
+    public Patient(String name, String surname, Address address, int password, LocalDate dob, Gender gender) {
         super(ROLE, name, surname, address, password);
         _dob = dob;
         _gender = gender;
@@ -69,7 +69,7 @@ public class Patient extends User
      * @param gender the Patient's gender.
      * @param seed the pseudo-random generator seed. This ensures repeatable random generation.
      */
-    public Patient(String name, String surname, String password, LocalDate dob, Gender gender, long seed) {
+    public Patient(String name, String surname, int password, LocalDate dob, Gender gender, long seed) {
         super(ROLE, name, surname, password, seed);
         _dob = dob;
         _gender = gender;

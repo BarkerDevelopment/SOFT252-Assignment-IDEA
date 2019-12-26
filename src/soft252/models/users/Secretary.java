@@ -24,7 +24,7 @@ public class Secretary extends User
      * @param address the Secretary's address
      * @param password the Secretary's password.
      */
-    public Secretary(String name, String surname, Address address, String password) {
+    public Secretary(String name, String surname, Address address, int password) {
         super(ROLE, name, surname, address, password);
     }
 
@@ -37,7 +37,7 @@ public class Secretary extends User
      * @param password the Secretary's password.
      * @param seed the pseudo-random generator seed. This ensures repeatable random generation.
      */
-    public Secretary(String name, String surname, String password, long seed) {
+    public Secretary(String name, String surname, int password, long seed) {
         super(ROLE, name, surname, password, seed);
     }
 

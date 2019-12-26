@@ -33,7 +33,7 @@ public class Doctor extends User
      * @param address the Doctor's address
      * @param password the Doctor's password.
      */
-    public Doctor(String name, String surname, Address address, String password) {
+    public Doctor(String name, String surname, Address address, int password) {
         super(ROLE, name, surname, address, password);
         _feedback = new ArrayList<>();
     }
@@ -47,7 +47,7 @@ public class Doctor extends User
      * @param password the Doctor's password.
      * @param seed the pseudo-random generator seed. This ensures repeatable random generation.
      */
-    public Doctor(String name, String surname, String password, long seed) {
+    public Doctor(String name, String surname, int password, long seed) {
         super(ROLE, name, surname, password, seed);
         _feedback = new ArrayList<>();
     }

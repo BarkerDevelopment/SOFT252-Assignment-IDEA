@@ -26,28 +26,24 @@ class IDTest {
         _instance = UserRepository.getInstance();
 
         for(int i = 0; i < 5; i++){
-            _instance.add(
-                    new Patient(
-                            "Test",
-                            "Test",
-                            "password",
-                            LocalDate.of(1999, 1, 1),
-                            Gender.MALE,
-                            i * SEED)
-            );
+                new Patient(
+                        "Test",
+                        "Test",
+                        "password".hashCode(),
+                        LocalDate.of(1999, 1, 1),
+                        Gender.MALE,
+                        i * SEED).include();
         }
 
         /*
          * This will created a doctor with the same ID number as the first
          * patient but the overall ID will be unique due to the User role prefix.
          */
-        _instance.add(
-                new Doctor(
-                        "Test",
-                        "Test",
-                        "password",
-                        SEED)
-        );
+        new Doctor(
+                "Test",
+                "Test",
+                "password".hashCode(),
+                SEED).include();
     }
 
     /**

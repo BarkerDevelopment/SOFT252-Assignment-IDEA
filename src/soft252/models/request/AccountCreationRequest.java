@@ -13,7 +13,7 @@ public class AccountCreationRequest extends Request {
     private final String _name;
     private final String _surname;
     private final Address _address;
-    private final String _password;
+    private final int _password;
     private final LocalDate _dob;
     private final Gender _gender;
 
@@ -34,7 +34,7 @@ public class AccountCreationRequest extends Request {
         _name = name;
         _surname = surname;
         _address = address;
-        _password = password;
+        _password = password.hashCode();
         _dob = dob;
         _gender = gender;
     }
@@ -63,7 +63,7 @@ public class AccountCreationRequest extends Request {
     /**
      * @return the _password variable.
      */
-    public String getPassword() {
+    public int getPassword() {
         return _password;
     }
 

@@ -28,7 +28,7 @@ public class Admin extends User
      * @param address the Admin's address
      * @param password the Admin's password.
      */
-    public Admin(String name, String surname, Address address, String password) {
+    public Admin(String name, String surname, Address address, int password) {
         super(ROLE, name, surname, address, password);
     }
 
@@ -41,7 +41,7 @@ public class Admin extends User
      * @param password the Admin's password.
      * @param seed the pseudo-random generator seed. This ensures repeatable random generation.
      */
-    public Admin(String name, String surname, String password, long seed) {
+    public Admin(String name, String surname, int password, long seed) {
         super(ROLE, name, surname, password, seed);
     }
 

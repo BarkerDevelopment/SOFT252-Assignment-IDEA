@@ -19,7 +19,7 @@ public class User
     private String _name;
     private String _surname;
     private Address _address;
-    private String _password;
+    private int _password;
     private final ArrayList<I_Message> _messages;
 
     /**
@@ -32,7 +32,7 @@ public class User
      * @param address the User's address
      * @param password the User's password.
      */
-    public User(Role role, String name, String surname, Address address, String password){
+    public User(Role role, String name, String surname, Address address, int password){
         _id = new ID(role);
         _name = name;
         _surname = surname;
@@ -51,7 +51,7 @@ public class User
      * @param password the User's password.
      * @param seed the pseudo-random generator seed. This ensures repeatable random generation.
      */
-    public User(Role role, String name, String surname, String password, long seed){
+    public User(Role role, String name, String surname, int password, long seed){
         _id = new ID(role, seed);
         _name = name;
         _surname = surname;
@@ -75,7 +75,7 @@ public class User
         _name = name;
         _surname = surname;
         _address = new Address();
-        _password = "password";
+        _password = "password".hashCode();
         _messages = new ArrayList<>();
     }
 
@@ -121,7 +121,7 @@ public class User
     /**
      * @return the _password variable.
      */
-    public String getPassword() {
+    public int getPassword() {
         return _password;
     }
 
@@ -165,7 +165,7 @@ public class User
      * @param password the new contents to set _password to.
      */
     public void setPassword(String password) {
-        _password = password;
+        _password = password.hashCode();
     }
 
     /**
